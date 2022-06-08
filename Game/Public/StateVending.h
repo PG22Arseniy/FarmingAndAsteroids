@@ -26,7 +26,12 @@ public:
 	virtual void ExitState() = 0;
 	virtual void RunState();
 	int counter = 0;
-	
+
+	bool NextState = false; 
+
+	int nKeys = 0;
+	const Uint8* pState = SDL_GetKeyboardState(&nKeys); 
+
 	Square* VendMachine; 
 	std::list<Bullet*> coins;
 };

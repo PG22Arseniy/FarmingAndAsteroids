@@ -154,8 +154,6 @@
     <ClInclude Include="Game\Public\CircleComponent.h" />
     <ClInclude Include="Game\Public\Component.h" />
     <ClInclude Include="Game\Public\Drink.h" />
-    <ClInclude Include="Game\Public\FiniteStateMachine.h" />
-    <ClInclude Include="Game\Public\FiniteStateMachineStopWatch.h" />
     <ClInclude Include="Game\Public\FiniteStateVendingMachine.h" />
     <ClInclude Include="Game\Public\GameInterface.h" />
     <ClInclude Include="Game\Public\GameObject.h" />
@@ -164,8 +162,6 @@
     <ClInclude Include="Game\Public\ShapeComponent.h" />
     <ClInclude Include="Game\Public\Ship.h" />
     <ClInclude Include="Game\Public\Square.h" />
-    <ClInclude Include="Game\Public\State.h" />
-    <ClInclude Include="Game\Public\StateStopWatch.h" />
     <ClInclude Include="Game\Public\StateVending.h" />
     <ClInclude Include="Game\Public\TrafficLight.h" />
     <ClInclude Include="Game\Public\Transform.h" />
@@ -177,15 +173,11 @@
     <ClCompile Include="Game\Private\CircleComponent.cpp" />
     <ClCompile Include="Game\Private\Component.cpp" />
     <ClCompile Include="Game\Private\FiniteStateVendingMachine.cpp" />
-    <ClCompile Include="Game\Private\FiniteStateMachineStopWatch.cpp" />
-    <ClCompile Include="Game\Private\FiniteStateMachine.cpp" />
     <ClCompile Include="Game\Private\Game.cpp" />
     <ClCompile Include="Game\Private\GameObject.cpp" />
     <ClCompile Include="Game\Private\Main.cpp" />
     <ClCompile Include="Game\Private\PhysicsComponent.cpp" />
     <ClCompile Include="Game\Private\ShapeComponent.cpp" />
-    <ClCompile Include="Game\Private\State.cpp" />
-    <ClCompile Include="Game\Private\StateStopWatch.cpp" />
     <ClCompile Include="Game\Private\StateVending.cpp" />
     <ClCompile Include="Game\Private\Transform.cpp" />
     <ClCompile Include="Game\Public\Asteroid.cpp" />

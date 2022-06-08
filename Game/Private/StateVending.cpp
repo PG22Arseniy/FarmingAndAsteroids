@@ -34,6 +34,7 @@ void SelectDrinkState::EnterState()
 
 void SelectDrinkState::ExitState()
 {
+	NextState = false; 
 	delete VendMachine; 
 }
 
@@ -42,7 +43,14 @@ void SelectDrinkState::RunState()
 {
 	VendingState::RunState();
 
+	if (pState[SDL_SCANCODE_SPACE]) {
 
+		NextState = true;
+
+	}
+	if (pState[SDL_SCANCODE_RETURN]) {
+
+	}
 }
 
 
@@ -66,11 +74,11 @@ void InsertCoinsState::EnterState()
 
 void InsertCoinsState::ExitState()
 {
-	for (Bullet* coin : coins) {
-		delete coin;
-	}
-	 
-	coins.clear();
+	//for (Bullet* coin : coins) {
+	//	delete coin;
+	//}
+	// 
+	//coins.clear();
 }
 
 
@@ -81,15 +89,15 @@ void InsertCoinsState::RunState()
 	c.mColor[1] = 250;
 	c.mColor[2] = 50;
 	c.mColor[3] = 250;
-	if (counter % 20 == 0) {
-		Bullet* coin = new Bullet({ xPos ,350 }, { 0, 0 }, 5); 
-	
-	
-		coin->Initialize();
-		coin->mColor = c; 
-		xPos = xPos + 50;
-		coins.push_back(coin);
-	}
+	//if (counter % 20 == 0) {
+	//	Bullet* coin = new Bullet({ xPos ,350 }, { 0, 0 }, 5); 
+	//
+	//
+	//	coin->Initialize();
+	//	coin->mColor = c; 
+	//	xPos = xPos + 50;
+	//	coins.push_back(coin);
+	//}
 	VendingState::RunState(); 
 	 
 }
@@ -120,7 +128,7 @@ void CreateDrinkState::ExitState()
 void CreateDrinkState::RunState()
 
 {
-	drink = new Drink({ 600 ,500 }, { 0, 0 }, 50, counter/4);    
+	drink = new Drink({ 650 ,100 }, { 0, 0 }, 50, counter/4);        
 	drink->Initialize();
 	drinks.push_back(drink); 
 	VendingState::RunState();

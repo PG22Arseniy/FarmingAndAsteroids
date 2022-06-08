@@ -27,9 +27,7 @@ FiniteStateVendingMachine::FiniteStateVendingMachine(VendingStateDefinations Sta
 	}
 	srand(time(NULL));
 
-	Square* VendMachine = new Square({ 600 ,180 }, { 0, 0 }, 5); 
-	VendMachine->Initialize();
-	mCurrentState->EnterState();
+	mCurrentState->EnterState(); 
 }
 
 FiniteStateVendingMachine::~FiniteStateVendingMachine()
@@ -48,7 +46,9 @@ void FiniteStateVendingMachine::RunStateMachine(exEngineInterface* engine)
 	c.mColor[2] = 0;
 	c.mColor[3] = 255;
 	int mFontID = engine->LoadFont("Build/afternight.ttf", 30);
-	engine->DrawText(mFontID, exVector2{ 500 ,50 }, "Vending Machine", c, 0);  
+	engine->DrawText(mFontID, exVector2{ 250 ,50 }, "Farming And Asteroids", c, 0);     
+	Drink * drink = new Drink({ 650 ,100 }, { 0, 0 }, 50, 0);  
+	drink->Initialize();
 
 	if (!mCurrentState) return;
 
@@ -60,12 +60,10 @@ void FiniteStateVendingMachine::RunStateMachine(exEngineInterface* engine)
 		mCurrentState->RunState();
 		if (SelectDrinkState* CurrentSelectDrinkState = dynamic_cast<SelectDrinkState*>(mCurrentState))
 		{
-			engine->DrawText(mFontID, exVector2{ 530 ,180 }, "Selecting...", c, 0);   
 			//Exit Condition
-			if (CurrentSelectDrinkState->counter >= SelectDrink_DURATION)
+			if (CurrentSelectDrinkState->NextState) 
 			{
-				mCurrentState->ExitState();
- 
+				mCurrentState->ExitState(); 
 				mCurrentState = mInsertCoinsState;
 				mCurrentState->EnterState();
 				break;

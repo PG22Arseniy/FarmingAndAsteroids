@@ -73,25 +73,13 @@
     <ClInclude Include="Game\Public\Bullet.h">
       <Filter>Source Files\Game\Public</Filter>
     </ClInclude>
-    <ClInclude Include="Game\Public\FiniteStateMachine.h">
-      <Filter>Source Files\Game\Public</Filter>
-    </ClInclude>
-    <ClInclude Include="Game\Public\State.h">
-      <Filter>Source Files\Game\Public</Filter>
-    </ClInclude>
     <ClInclude Include="Utils.h">
       <Filter>Source Files\Game\Public</Filter>
     </ClInclude>
     <ClInclude Include="Game\Public\TrafficLight.h">
       <Filter>Source Files\Game\Public</Filter>
     </ClInclude>
-    <ClInclude Include="Game\Public\FiniteStateMachineStopWatch.h">
-      <Filter>Source Files\Game\Public</Filter>
-    </ClInclude>
     <ClInclude Include="Game\Public\FiniteStateVendingMachine.h">
-      <Filter>Source Files\Game\Public</Filter>
-    </ClInclude>
-    <ClInclude Include="Game\Public\StateStopWatch.h">
       <Filter>Source Files\Game\Public</Filter>
     </ClInclude>
     <ClInclude Include="Game\Public\StateVending.h">
@@ -153,19 +141,7 @@
     <ClCompile Include="Game\Private\FiniteStateVendingMachine.cpp">
       <Filter>Source Files\Game\Private</Filter>
     </ClCompile>
-    <ClCompile Include="Game\Private\State.cpp">
-      <Filter>Source Files\Game\Private</Filter>
-    </ClCompile>
     <ClCompile Include="Game\Public\TrafficLight.cpp">
-      <Filter>Source Files\Game\Private</Filter>
-    </ClCompile>
-    <ClCompile Include="Game\Private\FiniteStateMachineStopWatch.cpp">
-      <Filter>Source Files\Game\Private</Filter>
-    </ClCompile>
-    <ClCompile Include="Game\Private\FiniteStateMachine.cpp">
-      <Filter>Source Files\Game\Private</Filter>
-    </ClCompile>
-    <ClCompile Include="Game\Private\StateStopWatch.cpp">
       <Filter>Source Files\Game\Private</Filter>
     </ClCompile>
     <ClCompile Include="Game\Private\StateVending.cpp">

@@ -10,9 +10,9 @@
 #include "Game/Public/PhysicsComponent.h"
 #include "Engine/Public/EngineInterface.h"
 #include "Engine/Public/SDL.h" 
-#include "Game/Public/FiniteStateMachine.h" 
-#include "Game/Public/FiniteStateVendingMachine.h" 
-#include "Game/Public/FiniteStateMachineStopWatch.h" 
+
+#include "Game/Public/FiniteStateVendingMachine.h"  
+
 #include "Game/Public/CircleComponent.h"
 #include "Game/Public/BoxComponent.h"
 #include "Game/Public/GameObject.h"
@@ -61,10 +61,7 @@ void MyGame::Initialize( exEngineInterface* pEngine )
 	mTextPosition.x = 50.0f;
 	mTextPosition.y = 50.0f;
 	GameObject owner;
-	
-	
-	TrafficLightStateMachine = new FiniteStateMachine(StateDefinations::Green);
-	StopWatchStateMachine = new FiniteStateMachineStopWatch(StopWatchStateDefinations::Going);    
+	 
 	VendingStateMachine = new FiniteStateVendingMachine(VendingStateDefinations::SelectDrink);  
 	
 	
@@ -176,20 +173,11 @@ void MyGame::Run( float fDeltaT )
 		box->Render(mEngine, b, 1);
 	} 
 
- 
-	if (mTrafficLight) {
-
-		TrafficLightStateMachine->RunStateMachine();
-	}
 	if (mVendingMachine) {
 
 		VendingStateMachine->RunStateMachine(mEngine); 
 	}
-	if (mStopWatch) {
 
-		StopWatchStateMachine->RunStateMachine(fDeltaT , mEngine);
-	
-	}
 
 	// Updating all objects with physics component every frame
 	for (PhysicsComponent* phComp : PhysicsComponent::mAllPhysicsComponents) {
@@ -199,10 +187,10 @@ void MyGame::Run( float fDeltaT )
 
 	exColor c; 
 
-	c.mColor[0] = 25;
-	c.mColor[1] = 255;
-	c.mColor[2] = 0;
-	c.mColor[3] = 255;
+	c.mColor[0] = 75;
+	c.mColor[1] = 75;  
+	c.mColor[2] = 100;
+	c.mColor[3] = 255; 
 	
 	// rendering all circles:
 	for (CircleComponent* circle : CircleComponent::AllCircleComponents) {
