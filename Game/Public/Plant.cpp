@@ -1,0 +1,48 @@
+#include "Game/Public/Box.h"
+#include "Game/Public/BoxComponent.h"
+#include "Game/Public/CircleComponent.h"
+#include "Game/Public/PhysicsComponent.h" 
+#include "Game/Public/Transform.h"
+#include "Game/Public/Plant.h"
+
+Plant::Plant()
+{
+	mPosition = { 0,0 };
+	mVelocity = { 0,0 };
+	mPlantSize = 0;
+	mFlowerSize = 0;
+	mFlowerMarginUp = 30;
+}
+
+Plant::Plant(exVector2 position, exVector2 velocity, float stemSize, float flowerSize, float flowerMarginUp) 
+{
+	mPosition = position;
+	mVelocity = velocity;
+	mPlantSize = stemSize;
+	mFlowerSize = flowerSize;
+	mFlowerMarginUp = flowerMarginUp; 
+}
+
+//Overriden from the Ball class.
+void Plant::Initialize()
+{
+
+ 
+	AddComponent(new BoxComponent(this, mPlantSize*1, mPlantSize * 5));     
+	AddComponent(new CircleComponent(this, mFlowerSize)); 
+	//Added a Circle COmponent to our Circle;
+	
+     
+	AddComponent(new Transform(this, mPosition));
+
+	GameObject::Initialize();
+}
+
+
+//Collision Event Litsner
+void Plant::OnCollision(PhysicsComponent* pCurrentComponent, PhysicsComponent* pOtherComponent)
+{
+	//Update Position
+	// Play Particle
+	//TODO something
+}

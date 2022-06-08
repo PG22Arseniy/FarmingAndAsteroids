@@ -11,7 +11,7 @@
 #include "Engine/Public/EngineInterface.h"
 #include "Engine/Public/SDL.h" 
 
-#include "Game/Public/FiniteStateVendingMachine.h"  
+#include "Game/Public/FiniteStateMachine.h"  
 
 #include "Game/Public/CircleComponent.h"
 #include "Game/Public/BoxComponent.h"
@@ -62,7 +62,7 @@ void MyGame::Initialize( exEngineInterface* pEngine )
 	mTextPosition.y = 50.0f;
 	GameObject owner;
 	 
-	VendingStateMachine = new FiniteStateVendingMachine(VendingStateDefinations::SelectDrink);  
+	StateMachine = new FiniteStateMachine(StateDefinations::SelectDrink);  
 	
 	
 
@@ -115,20 +115,20 @@ void MyGame::OnEventsConsumed()
 
 	// toggle between state machines
 	if (pState[SDL_SCANCODE_1]) {
-		mVendingMachine = false;
+		mMachine = false;
 		mStopWatch = false;
 		mTrafficLight = true;
 	}
 	if (pState[SDL_SCANCODE_2]) {
 	
-		mVendingMachine = false;
+		mMachine = false;
 		mTrafficLight = false;
 		mStopWatch = true;
 	}
 	if (pState[SDL_SCANCODE_3]) { 
 		mStopWatch = false;
 		mTrafficLight = false;
-		mVendingMachine = true;
+		mMachine = true;
 	}
 }
 
@@ -173,9 +173,9 @@ void MyGame::Run( float fDeltaT )
 		box->Render(mEngine, b, 1);
 	} 
 
-	if (mVendingMachine) {
+	if (mMachine) {
 
-		VendingStateMachine->RunStateMachine(mEngine); 
+		StateMachine->RunStateMachine(mEngine); 
 	}
 
 

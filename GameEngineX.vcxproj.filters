@@ -79,16 +79,19 @@
     <ClInclude Include="Game\Public\TrafficLight.h">
       <Filter>Source Files\Game\Public</Filter>
     </ClInclude>
-    <ClInclude Include="Game\Public\FiniteStateVendingMachine.h">
+    <ClInclude Include="Game\Public\FiniteStateMachine.h">
       <Filter>Source Files\Game\Public</Filter>
     </ClInclude>
-    <ClInclude Include="Game\Public\StateVending.h">
+    <ClInclude Include="Game\Public\State.h">
       <Filter>Source Files\Game\Public</Filter>
     </ClInclude>
     <ClInclude Include="Game\Public\Square.h">
       <Filter>Source Files\Game\Public</Filter>
     </ClInclude>
     <ClInclude Include="Game\Public\Drink.h">
+      <Filter>Source Files\Game\Public</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\Public\Plant.h">
       <Filter>Source Files\Game\Public</Filter>
     </ClInclude>
   </ItemGroup>
@@ -138,19 +141,22 @@
     <ClCompile Include="Game\Public\Bullet.cpp">
       <Filter>Source Files\Game\Private</Filter>
     </ClCompile>
-    <ClCompile Include="Game\Private\FiniteStateVendingMachine.cpp">
+    <ClCompile Include="Game\Private\FiniteStateMachine.cpp">
       <Filter>Source Files\Game\Private</Filter>
     </ClCompile>
     <ClCompile Include="Game\Public\TrafficLight.cpp">
       <Filter>Source Files\Game\Private</Filter>
     </ClCompile>
-    <ClCompile Include="Game\Private\StateVending.cpp">
+    <ClCompile Include="Game\Private\State.cpp">
       <Filter>Source Files\Game\Private</Filter>
     </ClCompile>
     <ClCompile Include="Game\Public\Square.cpp">
       <Filter>Source Files\Game\Private</Filter>
     </ClCompile>
     <ClCompile Include="Game\Public\Drink.cpp">
+      <Filter>Source Files\Game\Private</Filter>
+    </ClCompile>
+    <ClCompile Include="Game\Public\Plant.cpp">
       <Filter>Source Files\Game\Private</Filter>
     </ClCompile>
   </ItemGroup>

@@ -1,8 +1,1 @@
-﻿  FiniteStateVendingMachine.cpp
-C:\Users\pg22arseniy\Public\Repos\FarmingAndAsteroids\Game\Private\FiniteStateVendingMachine.cpp(28,12): warning C4244: 'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
-  Game.cpp
-  Main.cpp
-  StateVending.cpp
-C:\Users\pg22arseniy\Public\Repos\FarmingAndAsteroids\Game\Private\StateVending.cpp(131,55): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-  Generating Code...
-  GameEngineX.vcxproj -> C:\Users\pg22arseniy\Public\Repos\FarmingAndAsteroids\Build\GameEngineXd.exe
+﻿  GameEngineX.vcxproj -> C:\Users\pg22arseniy\Public\Repos\FarmingAndAsteroids\Build\GameEngineXd.exe
