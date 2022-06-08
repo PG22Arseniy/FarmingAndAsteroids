@@ -157,6 +157,8 @@
     <ClInclude Include="Game\Public\FiniteStateMachine.h" />
     <ClInclude Include="Game\Public\GameInterface.h" />
     <ClInclude Include="Game\Public\GameObject.h" />
+    <ClInclude Include="Game\Public\GameObjectHandle.h" />
+    <ClInclude Include="Game\Public\GameObjectManager.h" />
     <ClInclude Include="Game\Public\IPhysicsCollisionEvent.h" />
     <ClInclude Include="Game\Public\PhysicsComponent.h" />
     <ClInclude Include="Game\Public\Plant.h" />
@@ -185,6 +187,8 @@
     <ClCompile Include="Game\Public\Box.cpp" />
     <ClCompile Include="Game\Public\Bullet.cpp" />
     <ClCompile Include="Game\Public\Drink.cpp" />
+    <ClCompile Include="Game\Public\GameObjectHandle.cpp" />
+    <ClCompile Include="Game\Public\GameObjectManager.cpp" />
     <ClCompile Include="Game\Public\IPhysicsCollisionEvent.cpp" />
     <ClCompile Include="Game\Public\Plant.cpp" />
     <ClCompile Include="Game\Public\Ship.cpp" />

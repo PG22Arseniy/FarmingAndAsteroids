@@ -7,6 +7,8 @@
 #include "Engine/Public/SDL.h" 
 #include "Game/Public/Game.h"
 #include "Game/Public/Plant.h"
+#include "Game/Public/GameObjectHandle.h"  
+#include "Game/Public/GameObjectManager.h" 
 // SelectDrink STATE
 
 void State::RunState()
@@ -54,6 +56,7 @@ void SelectState::RunState()
 
 		plant = new Plant({ 150, 200 }, { 0,0 }, 10, 15, 30, "Richard");
 		plant->Initialize(); 
+		GameObjectHandle* mCurrentObjectHandle = new GameObjectHandle(Hash::GenerateHash(plant)); 
 		NewPlantState = true; 
 	}
 }

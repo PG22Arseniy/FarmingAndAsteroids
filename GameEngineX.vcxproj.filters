@@ -94,6 +94,12 @@
     <ClInclude Include="Game\Public\Plant.h">
       <Filter>Source Files\Game\Public</Filter>
     </ClInclude>
+    <ClInclude Include="Game\Public\GameObjectHandle.h">
+      <Filter>Source Files\Game\Public</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\Public\GameObjectManager.h">
+      <Filter>Source Files\Game\Public</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Game\Private\Main.cpp">
@@ -157,6 +163,12 @@
       <Filter>Source Files\Game\Private</Filter>
     </ClCompile>
     <ClCompile Include="Game\Public\Plant.cpp">
+      <Filter>Source Files\Game\Private</Filter>
+    </ClCompile>
+    <ClCompile Include="Game\Public\GameObjectHandle.cpp">
+      <Filter>Source Files\Game\Private</Filter>
+    </ClCompile>
+    <ClCompile Include="Game\Public\GameObjectManager.cpp">
       <Filter>Source Files\Game\Private</Filter>
     </ClCompile>
   </ItemGroup>

@@ -4,6 +4,8 @@
 #include "Game/Public/PhysicsComponent.h" 
 #include "Game/Public/Transform.h"
 #include "Game/Public/Plant.h"
+#include "Game/Public/GameObjectHandle.h"  
+#include "Game/Public/GameObjectManager.h" 
 
 Plant::Plant()
 {
@@ -14,20 +16,21 @@ Plant::Plant()
 	mFlowerMarginUp = 30;
 }
 
-Plant::Plant(exVector2 position, exVector2 velocity, float stemSize, float flowerSize, float flowerMarginUp) 
+Plant::Plant(exVector2 position, exVector2 velocity, float stemSize, float flowerSize, float flowerMarginUp, std::string name) 
 {
 	mPosition = position;
 	mVelocity = velocity;
 	mPlantSize = stemSize;
 	mFlowerSize = flowerSize;
 	mFlowerMarginUp = flowerMarginUp; 
+	mName = name;
 }
 
 //Overriden from the Ball class.
 void Plant::Initialize()
 {
-
- 
+	GameObjectManager::GetInstance()->RegisterGameObject(this);
+	
 	AddComponent(new BoxComponent(this, mPlantSize*1, mPlantSize * 5));     
 	AddComponent(new CircleComponent(this, mFlowerSize)); 
 	//Added a Circle COmponent to our Circle;
@@ -37,8 +40,11 @@ void Plant::Initialize()
 
 	GameObject::Initialize();
 }
-
-
+void Plant::Destroy()
+{
+	GameObjectManager::GetInstance()->UnregisterGameObject(this);
+	delete this; 
+}
 //Collision Event Litsner
 void Plant::OnCollision(PhysicsComponent* pCurrentComponent, PhysicsComponent* pOtherComponent)
 {
