@@ -2,6 +2,7 @@
 #pragma once
 #include "vector"
 #include "Game/Public/Box.h"
+#include "Game/Public/Plant.h"
 #include "Game/Public/Drink.h"
 #include "Game/Public/Square.h"
 #include "Game/Public/Bullet.h"
@@ -30,7 +31,8 @@ public:
 	virtual void RunState();
 	int counter = 0;
 
-	bool NextState = false; 
+	bool NewDrinkState = false; 
+	bool NewPlantState = false; 
 
 	int nKeys = 0;
 	const Uint8* pState = SDL_GetKeyboardState(&nKeys); 
@@ -50,8 +52,10 @@ public:
 	void EnterState() override;
 	void ExitState() override;
 	void RunState() override;
-
+	Plant* plant; 
 	int ThirstMeter;
+
+
 
 };
 

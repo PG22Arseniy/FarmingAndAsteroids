@@ -6,23 +6,23 @@
 FiniteStateMachine::FiniteStateMachine(StateDefinations StartingState)
 {
 	//TODO 
-	mSelectDrinkState = new SelectState();
-	mInsertCoinsState = new CreatePlantState();
+	mSelectState = new SelectState();
+	mCreatePlantState = new CreatePlantState();
 	mCreateDrinkState = new CreateDrinkState();
 
 	switch (StartingState)
 	{
 	case StateDefinations::Select:
-		mCurrentState = mSelectDrinkState;
+		mCurrentState = mSelectState;
 		break;
 	case StateDefinations::CreatePlant:
-		mCurrentState = mInsertCoinsState;
+		mCurrentState = mCreatePlantState;
 		break;
 	case StateDefinations::CreateDrink:
 		mCurrentState = mCreateDrinkState;
 		break;
 	default:
-		mCurrentState = mSelectDrinkState;
+		mCurrentState = mSelectState;
 		break;
 	}
 	srand(time(NULL));
@@ -32,9 +32,9 @@ FiniteStateMachine::FiniteStateMachine(StateDefinations StartingState)
 
 FiniteStateMachine::~FiniteStateMachine()
 {
-	delete mInsertCoinsState;
+	delete mCreatePlantState;
 	delete mCreateDrinkState;
-	delete mSelectDrinkState;
+	delete mSelectState;
 }
 
 void FiniteStateMachine::RunStateMachine(exEngineInterface* engine)
@@ -61,10 +61,10 @@ void FiniteStateMachine::RunStateMachine(exEngineInterface* engine)
 		if (SelectState* CurrentSelectState = dynamic_cast<SelectState*>(mCurrentState))
 		{
 			//Exit Condition
-			if (CurrentSelectState->NextState) 
+			if (CurrentSelectState->NewDrinkState)  
 			{
 				mCurrentState->ExitState(); 
-				mCurrentState = mInsertCoinsState;
+				mCurrentState = mCreatePlantState;
 				mCurrentState->EnterState();
 				break;
 			}
@@ -76,7 +76,7 @@ void FiniteStateMachine::RunStateMachine(exEngineInterface* engine)
 		if (CreatePlantState* CurrentCreatePlantState = dynamic_cast<CreatePlantState*>(mCurrentState))
 		{
 			//Exit Condition
-			if (CurrentCreatePlantState->counter >= DRINK_PRICE)
+			if (CurrentCreatePlantState->counter >= CreateDrink_DURATION)
 			{
 				mCurrentState->ExitState();
 				mCurrentState = mCreateDrinkState;
@@ -94,7 +94,7 @@ void FiniteStateMachine::RunStateMachine(exEngineInterface* engine)
 			if (CurrentCreateDrinkState->counter >= CreateDrink_DURATION)
 			{
 				mCurrentState->ExitState();
-				mCurrentState = mSelectDrinkState;
+				mCurrentState = mSelectState;
 				mCurrentState->EnterState();  
 				break;
 			}

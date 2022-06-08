@@ -62,7 +62,7 @@ void MyGame::Initialize( exEngineInterface* pEngine )
 	mTextPosition.y = 50.0f;
 	GameObject owner;
 	 
-	StateMachine = new FiniteStateMachine(StateDefinations::SelectDrink);  
+	StateMachine = new FiniteStateMachine(StateDefinations::Select);   
 	
 	
 
@@ -113,22 +113,8 @@ void MyGame::OnEventsConsumed()
 
 
 
-	// toggle between state machines
-	if (pState[SDL_SCANCODE_1]) {
-		mMachine = false;
-		mStopWatch = false;
-		mTrafficLight = true;
-	}
-	if (pState[SDL_SCANCODE_2]) {
-	
-		mMachine = false;
-		mTrafficLight = false;
-		mStopWatch = true;
-	}
 	if (pState[SDL_SCANCODE_3]) { 
-		mStopWatch = false;
-		mTrafficLight = false;
-		mMachine = true;
+		//TODO: run statemachine on command 
 	}
 }
 
@@ -173,10 +159,10 @@ void MyGame::Run( float fDeltaT )
 		box->Render(mEngine, b, 1);
 	} 
 
-	if (mMachine) {
+	
 
-		StateMachine->RunStateMachine(mEngine); 
-	}
+	StateMachine->RunStateMachine(mEngine); 
+	
 
 
 	// Updating all objects with physics component every frame

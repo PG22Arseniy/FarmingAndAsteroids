@@ -8,6 +8,7 @@ class GameObject
 {
 public:
 	GameObject();
+	GameObject(std::string name); 
 	~GameObject();
 
 	virtual void Initialize();
@@ -18,6 +19,8 @@ public:
 	T* FindComponent(ComponentTypes eType);
 
 	exColor mColor;
+
+	std::string mName;
 
 private:
 

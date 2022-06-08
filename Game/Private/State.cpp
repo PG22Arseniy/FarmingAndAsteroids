@@ -35,8 +35,9 @@ void SelectState::EnterState()
 
 void SelectState::ExitState()
 {
-	NextState = false; 
-	delete VendMachine; 
+	NewDrinkState = false;
+	NewPlantState = false; 
+
 }
 
 
@@ -46,11 +47,14 @@ void SelectState::RunState()
 
 	if (pState[SDL_SCANCODE_SPACE]) {
 
-		NextState = true;
+		NewDrinkState = true;
 
 	}
 	if (pState[SDL_SCANCODE_RETURN]) {
 
+		plant = new Plant({ 150, 200 }, { 0,0 }, 10, 15, 30, "Richard");
+		plant->Initialize(); 
+		NewPlantState = true; 
 	}
 }
 

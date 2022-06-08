@@ -16,8 +16,8 @@ public:
 
 private:
 
-	SelectDrinkState* mSelectDrinkState;
-	InsertCoinsState* mInsertCoinsState;
+	SelectState* mSelectState; 
+	CreatePlantState* mCreatePlantState;
 	CreateDrinkState* mCreateDrinkState;
 
 	State* mCurrentState;
@@ -25,8 +25,7 @@ private:
 	int TotalMoney = 0;
 
 
-	const int SelectDrink_DURATION = 100; 
-	const int DRINK_PRICE = 120;   
+	const int Select_DURATION = 100;   
 	const int CreateDrink_DURATION = 160;   
 
 };

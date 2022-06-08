@@ -1,1 +1,3 @@
-﻿  GameEngineX.vcxproj -> C:\Users\pg22arseniy\Public\Repos\FarmingAndAsteroids\Build\GameEngineXd.exe
+﻿  State.cpp
+C:\Users\pg22arseniy\Public\Repos\FarmingAndAsteroids\Game\Private\State.cpp(135,55): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+  GameEngineX.vcxproj -> C:\Users\pg22arseniy\Public\Repos\FarmingAndAsteroids\Build\GameEngineXd.exe

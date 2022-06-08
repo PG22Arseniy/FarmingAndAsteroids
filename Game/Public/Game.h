@@ -14,7 +14,7 @@
 #include "Game/Public/Ship.h" 
 #include "Game/Public/Bullet.h"  
 #include "Game/Public/Asteroid.h"  
-#include "Game/Public/FiniteStateVendingMachine.h"  
+#include "Game/Public/FiniteStateMachine.h"  
  
 
 
@@ -56,7 +56,7 @@ private:
 	bool Repeat;  
 	bool Continue; 
 
-	FiniteStateVendingMachine*	VendingStateMachine;   
+	FiniteStateMachine*	StateMachine;    
 	Ball*						ball;  
 	Ball*						ball2;
 	Box*						box;  
