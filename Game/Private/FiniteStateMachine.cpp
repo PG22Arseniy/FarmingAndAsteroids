@@ -9,6 +9,8 @@ FiniteStateMachine::FiniteStateMachine(StateDefinations StartingState)
 	mSelectState = new SelectState(nullptr);
 	mCreatePlantState = new CreatePlantState(nullptr);
 	mCreateDrinkState = new CreateDrinkState(nullptr); 
+	mWaterPlantState = new WaterPlantState(nullptr); 
+	mPlantGrowthState = new PlantGrowthState(nullptr);
 
 	switch (StartingState)
 	{
@@ -18,8 +20,14 @@ FiniteStateMachine::FiniteStateMachine(StateDefinations StartingState)
 	case StateDefinations::CreatePlant:
 		mCurrentState = mCreatePlantState;
 		break;
+	case StateDefinations::WaterPlant:
+		mCurrentState = mWaterPlantState;
+		break;
 	case StateDefinations::CreateDrink:
 		mCurrentState = mCreateDrinkState;
+		break;
+	case StateDefinations::PlantGrowth:
+		mCurrentState = mPlantGrowthState;
 		break;
 	default:
 		mCurrentState = mSelectState;
@@ -33,7 +41,9 @@ FiniteStateMachine::FiniteStateMachine(StateDefinations StartingState)
 FiniteStateMachine::~FiniteStateMachine()
 {
 	delete mCreatePlantState;
+	delete mWaterPlantState;
 	delete mCreateDrinkState;
+	delete mPlantGrowthState;
 	delete mSelectState;
 }
 
@@ -68,6 +78,13 @@ void FiniteStateMachine::RunStateMachine(exEngineInterface* engine)
 				mCurrentState->EnterState();
 				break;
 			}
+			if (CurrentSelectState->NewPlantState)
+			{
+				mCurrentState->ExitState();
+				mCurrentState = mCreatePlantState; 
+				mCurrentState->EnterState(); 
+				break;
+			}
 		}
 		break;
 	case StateDefinations::CreatePlant:
@@ -79,11 +96,41 @@ void FiniteStateMachine::RunStateMachine(exEngineInterface* engine)
 			if (CurrentCreatePlantState->counter >= CreateDrink_DURATION)
 			{
 				mCurrentState->ExitState();
-				mCurrentState = mCreatePlantState;
+				mCurrentState = mSelectState; 
 				mCurrentState->EnterState();
 				break;
 			}
 		}
+		break;
+	case StateDefinations::WaterPlant:
+		mCurrentState->RunState();
+
+		if (WaterPlantState* CurrentWaterPlantState = dynamic_cast<WaterPlantState*>(mCurrentState))
+		{
+			//Exit Condition
+			if (CurrentWaterPlantState->counter >= WaterDrink_DURATION)
+			{
+				mCurrentState->ExitState();
+				mCurrentState = mCreatePlantState; 
+				mCurrentState->EnterState();
+				break;
+			}
+		}
+		break;
+	case StateDefinations::PlantGrowth:
+		mCurrentState->RunState();
+
+		if (PlantGrowthState* CurrentPlantGrowthState = dynamic_cast<PlantGrowthState*>(mCurrentState))
+		{
+			//Exit Condition
+			if (CurrentPlantGrowthState->counter >= PlantGrowth_DURATION) 
+			{
+				mCurrentState->ExitState();
+				mCurrentState = mSelectState;
+				mCurrentState->EnterState();
+				break; 
+			}
+		} 
 		break;
 	case StateDefinations::CreateDrink:
 		mCurrentState->RunState();
@@ -94,7 +141,7 @@ void FiniteStateMachine::RunStateMachine(exEngineInterface* engine)
 			if (CurrentCreateDrinkState->counter >= CreateDrink_DURATION)
 			{
 				mCurrentState->ExitState();
-				mCurrentState = mSelectState;
+				mCurrentState = mWaterPlantState;
 				mCurrentState->EnterState();  
 				break;
 			}

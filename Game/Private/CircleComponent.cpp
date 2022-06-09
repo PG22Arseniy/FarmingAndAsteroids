@@ -32,10 +32,11 @@ void CircleComponent::Render(exEngineInterface* engine, exColor color, int layer
 	if (Plant* plant = dynamic_cast<Plant*>(mOwningGameObject))
 	{
 		margin = plant->mFlowerMarginUp;
+		mRadius = plant->mFlowerSize; 
 	}
 	if (!(mOwningGameObject->mColor.mColor[0] == 0 && mOwningGameObject->mColor.mColor[1] == 0 && mOwningGameObject->mColor.mColor[2] == 0 && mOwningGameObject->mColor.mColor[3] == 0))
 		color = mOwningGameObject->mColor; 
 	
-	engine->DrawCircle({ position.x, position.y - margin}, mRadius, color, layer); 
+	engine->DrawCircle({ position.x, position.y - margin}, mRadius, color, layer);  
 }  
 

@@ -1,2 +1,4 @@
-﻿  CircleComponent.cpp
+﻿  State.cpp
+C:\Users\pg22arseniy\Public\Repos\FarmingAndAsteroids\Game\Private\State.cpp(130,31): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+C:\Users\pg22arseniy\Public\Repos\FarmingAndAsteroids\Game\Private\State.cpp(167,55): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
   GameEngineX.vcxproj -> C:\Users\pg22arseniy\Public\Repos\FarmingAndAsteroids\Build\GameEngineXd.exe

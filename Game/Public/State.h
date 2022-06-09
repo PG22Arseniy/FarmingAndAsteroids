@@ -34,7 +34,11 @@ public:
 	virtual void RunState();
 	int counter = 0;
 
+	std::list<Plant*> plants; 
+
 	GameObject* mObj;
+	exVector2 plantPositions[4] = { {150, 250}, {350,250}, { 150, 450 }, { 350, 450 } }; 
+	int currentPosition = 0; 
 
 	bool NewDrinkState = false; 
 	bool NewPlantState = false; 
@@ -42,8 +46,6 @@ public:
 	int nKeys = 0;
 	const Uint8* pState = SDL_GetKeyboardState(&nKeys); 
 
-	Square* VendMachine; 
-	std::list<Bullet*> coins;
 };
 
 
@@ -57,8 +59,6 @@ public:
 	void EnterState() override;
 	void ExitState() override;
 	void RunState() override;
-	int ThirstMeter;
-
 
 
 };
@@ -91,4 +91,33 @@ public: // Couldn't think about a funny idea
 	void RunState() override; 
 
 	float xPos = 450;    
+};
+
+class PlantGrowthState : public State//<StateDefinations::InsertCoins>
+{
+
+public: // Couldn't think about a funny idea
+
+	PlantGrowthState(GameObject* param); 
+	StateDefinations GetState() override;
+	void EnterState() override;
+	void ExitState() override;
+	void RunState() override;
+
+	float xPos = 450; 
+};
+
+
+class WaterPlantState : public State//<StateDefinations::InsertCoins>
+{
+
+public: // Couldn't think about a funny idea
+
+	WaterPlantState(GameObject* param);
+	StateDefinations GetState() override;
+	void EnterState() override;
+	void ExitState() override;
+	void RunState() override;
+
+	float xPos = 450;
 };

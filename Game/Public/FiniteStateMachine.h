@@ -18,7 +18,9 @@ private:
 
 	SelectState* mSelectState; 
 	CreatePlantState* mCreatePlantState;
-	CreateDrinkState* mCreateDrinkState;
+	WaterPlantState* mWaterPlantState; 
+	CreateDrinkState* mCreateDrinkState; 
+	PlantGrowthState* mPlantGrowthState;
 
 	State* mCurrentState;
 
@@ -27,6 +29,8 @@ private:
 
 	const int Select_DURATION = 100;   
 	const int CreateDrink_DURATION = 160;   
+	const int WaterDrink_DURATION = 160;    
+	const int PlantGrowth_DURATION = 260;  
 
 };
 
