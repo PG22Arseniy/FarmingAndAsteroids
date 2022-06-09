@@ -25,11 +25,16 @@ enum class StateDefinations
 class State
 {
 public:
+
+	State(GameObject * param);
+
 	virtual StateDefinations GetState() = 0;
 	virtual void EnterState();
 	virtual void ExitState() = 0;
 	virtual void RunState();
 	int counter = 0;
+
+	GameObject* mObj;
 
 	bool NewDrinkState = false; 
 	bool NewPlantState = false; 
@@ -47,12 +52,11 @@ class SelectState : public State//<StateDefinations::SelectDrink>
 
 public:
 
-	SelectState() {};
+	SelectState(GameObject * param);
 	StateDefinations GetState() override;
 	void EnterState() override;
 	void ExitState() override;
 	void RunState() override;
-	Plant* plant; 
 	int ThirstMeter;
 
 
@@ -64,7 +68,7 @@ class CreateDrinkState : public State//<StateDefinations::CreateDrink>
 
 public: // #Hydrated
 
-	CreateDrinkState() {};
+	CreateDrinkState(GameObject * param);
 	StateDefinations GetState() override;
 	void EnterState() override;
 	void ExitState() override;
@@ -80,7 +84,7 @@ class CreatePlantState : public State//<StateDefinations::InsertCoins>
 
 public: // Couldn't think about a funny idea
 
-	CreatePlantState() {};
+	CreatePlantState(GameObject * param);
 	StateDefinations GetState() override;
 	void EnterState() override;
 	void ExitState() override;

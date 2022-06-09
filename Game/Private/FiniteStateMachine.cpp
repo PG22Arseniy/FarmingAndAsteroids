@@ -6,9 +6,9 @@
 FiniteStateMachine::FiniteStateMachine(StateDefinations StartingState)
 {
 	//TODO 
-	mSelectState = new SelectState();
-	mCreatePlantState = new CreatePlantState();
-	mCreateDrinkState = new CreateDrinkState();
+	mSelectState = new SelectState(nullptr);
+	mCreatePlantState = new CreatePlantState(nullptr);
+	mCreateDrinkState = new CreateDrinkState(nullptr); 
 
 	switch (StartingState)
 	{
@@ -64,7 +64,7 @@ void FiniteStateMachine::RunStateMachine(exEngineInterface* engine)
 			if (CurrentSelectState->NewDrinkState)  
 			{
 				mCurrentState->ExitState(); 
-				mCurrentState = mCreatePlantState;
+				mCurrentState = mCreateDrinkState;
 				mCurrentState->EnterState();
 				break;
 			}
@@ -79,7 +79,7 @@ void FiniteStateMachine::RunStateMachine(exEngineInterface* engine)
 			if (CurrentCreatePlantState->counter >= CreateDrink_DURATION)
 			{
 				mCurrentState->ExitState();
-				mCurrentState = mCreateDrinkState;
+				mCurrentState = mCreatePlantState;
 				mCurrentState->EnterState();
 				break;
 			}

@@ -16,9 +16,20 @@ void State::RunState()
 	++counter;
 }
 
+
+State::State(GameObject* param)
+{
+	mObj = param;
+}
+
 void State::EnterState()
 {
 	counter = 0;
+}
+
+SelectState::SelectState(GameObject* param):State(param)
+{
+
 }
 
 StateDefinations SelectState::GetState()
@@ -54,15 +65,19 @@ void SelectState::RunState()
 	}
 	if (pState[SDL_SCANCODE_RETURN]) {
 
-		plant = new Plant({ 150, 200 }, { 0,0 }, 10, 15, 30, "Richard");
-		plant->Initialize(); 
-		GameObjectHandle* mCurrentObjectHandle = new GameObjectHandle(Hash::GenerateHash(plant)); 
+		mObj = new Plant({ 150, 200 }, { 0,0 }, 10, 15, 30, "Richard");
+		mObj->Initialize();
+		GameObjectHandle* mCurrentObjectHandle = new GameObjectHandle(Hash::GenerateHash(dynamic_cast<Plant*>(mObj)));
 		NewPlantState = true; 
 	}
 }
 
 
 // InsertCoins STATE
+
+CreatePlantState::CreatePlantState(GameObject* param): State (param)
+{
+}
 
 StateDefinations CreatePlantState::GetState()
 {
@@ -111,6 +126,10 @@ void CreatePlantState::RunState()
 
 
 // CreateDrink STATE
+
+CreateDrinkState::CreateDrinkState(GameObject* param): State(param)
+{
+}
 
 StateDefinations CreateDrinkState::GetState()
 {

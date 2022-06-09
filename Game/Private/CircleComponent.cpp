@@ -1,6 +1,7 @@
 #include "Game/Public/CircleComponent.h"
 #include "Engine/Public/EngineInterface.h"
 #include "Game/Public/GameObject.h"
+#include "Game/Public/Plant.h"
 #include "Engine/Public/SDL.h" 
 #include "Game/Public/Transform.h"
 #include "iostream" 
@@ -27,10 +28,14 @@ ComponentTypes CircleComponent::GetType()
 void CircleComponent::Render(exEngineInterface* engine, exColor color, int layer) {
 	exVector2 position = mOwningGameObject->FindComponent<Transform>(ComponentTypes::Transform)->mPosition;
 	//color = mOwningGameObject->mColor; 
-
+	float margin = 0;
+	if (Plant* plant = dynamic_cast<Plant*>(mOwningGameObject))
+	{
+		margin = plant->mFlowerMarginUp;
+	}
 	if (!(mOwningGameObject->mColor.mColor[0] == 0 && mOwningGameObject->mColor.mColor[1] == 0 && mOwningGameObject->mColor.mColor[2] == 0 && mOwningGameObject->mColor.mColor[3] == 0))
 		color = mOwningGameObject->mColor; 
 	
-	engine->DrawCircle( position , mRadius, color, layer);     
-} 
+	engine->DrawCircle({ position.x, position.y - margin}, mRadius, color, layer); 
+}  
 
