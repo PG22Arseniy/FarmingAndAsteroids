@@ -1,5 +1,7 @@
 #pragma once
 #include "GameObject.h"
+#include "GameObjectManager.h"
+#include "GameObjectHandle.h"
 #include "IPhysicsCollisionEvent.h"
 #include <iostream> 
 #include <string>  
@@ -16,11 +18,17 @@ public:
 	virtual void Initialize()override;
 	void Destroy();  
 
+	exVector2 getPosition(); 
+
 	virtual void OnCollision(PhysicsComponent* pCurrentComponent, PhysicsComponent* pOtherComponent);
 	float mFlowerSize; 
 	float mFlowerMarginUp; 
 
 	std::string mName;
+
+	bool CheckIfMaxSize ();
+
+	GameObjectHandle* CurrentObjectHandle; 
 
 private:
 	exVector2 mPosition;

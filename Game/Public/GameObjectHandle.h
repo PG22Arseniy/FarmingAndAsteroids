@@ -1,6 +1,7 @@
 #pragma once
 #include "Plant.h"
 class GameObject;
+class Plant; 
 
 class Hash
 {
@@ -17,7 +18,7 @@ public :
 
 	GameObjectHandle(int Hash);
 
-	int mHash;
+	int mHash = 999; 
 
 	bool IsValid();
 

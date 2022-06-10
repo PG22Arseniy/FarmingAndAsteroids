@@ -29,6 +29,9 @@ Plant::Plant(exVector2 position, exVector2 velocity, float stemSize, float flowe
 //Overriden from the Ball class.
 void Plant::Initialize()
 {
+
+	CurrentObjectHandle = new GameObjectHandle(Hash::GenerateHash(dynamic_cast<Plant*>(this)));
+
 	GameObjectManager::GetInstance()->RegisterGameObject(this);
 	
 	AddComponent(new BoxComponent(this, mPlantSize*1, mPlantSize * 5));     
@@ -45,10 +48,22 @@ void Plant::Destroy()
 	GameObjectManager::GetInstance()->UnregisterGameObject(this);
 	delete this; 
 }
+exVector2 Plant::getPosition()
+{
+	return mPosition; 
+}
 //Collision Event Litsner
 void Plant::OnCollision(PhysicsComponent* pCurrentComponent, PhysicsComponent* pOtherComponent)
 {
 	//Update Position
 	// Play Particle
 	//TODO something
+}
+
+bool Plant::CheckIfMaxSize()
+{
+	if (mFlowerSize >= 25) {
+		return true;
+	}
+	return false; 
 }

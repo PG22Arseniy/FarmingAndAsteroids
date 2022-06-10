@@ -34,11 +34,19 @@ public:
 	virtual void RunState();
 	int counter = 0;
 
-	std::list<Plant*> plants; 
-
+	//std::list<Plant*> plants; 
+	 
 	GameObject* mObj;
 	exVector2 plantPositions[4] = { {150, 250}, {350,250}, { 150, 450 }, { 350, 450 } }; 
-	int currentPosition = 0; 
+
+	Plant * plant1 = new Plant(plantPositions[0], { 0,0 }, 10, 0, 30, "Richard");
+	Plant * plant2 = new Plant(plantPositions[1], { 0,0 }, 10, 0, 30, "Becka");
+	Plant * plant3 = new Plant(plantPositions[2], { 0,0 }, 10, 0, 30, "Jane"); 
+	Plant * plant4 = new Plant(plantPositions[3], { 0,0 }, 10, 0, 30, "John"); 
+	
+	Plant* plants[4] = { plant1,plant2,plant3,plant4 };    
+
+	int currentPlant = 0;  
 
 	bool NewDrinkState = false; 
 	bool NewPlantState = false; 

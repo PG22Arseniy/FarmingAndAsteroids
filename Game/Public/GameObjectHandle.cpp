@@ -28,6 +28,7 @@ GameObjectHandle::GameObjectHandle(int Hash):mHash(Hash)
 
 bool GameObjectHandle::IsValid()
 {
+    if (this == nullptr) return false; 
     return GameObjectManager::GetInstance()->Exist(Get());
 }
 

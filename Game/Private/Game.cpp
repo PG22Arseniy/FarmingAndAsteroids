@@ -64,8 +64,8 @@ void MyGame::Initialize( exEngineInterface* pEngine )
 	 
 	StateMachine = new FiniteStateMachine(StateDefinations::Select);   
 	
-	
-
+	bullet = new Bullet({ 500 ,500 }, { 0, 0 }, 5); 
+	bullet->Initialize();
 	exVector2 ballPos;
 	ballPos.x = 300; 
 	ballPos.y = 200;
@@ -126,18 +126,22 @@ void MyGame::Run( float fDeltaT )
 	if ( mUp )
 	{
 		mTextPosition.y -= 40.0f * fDeltaT * 3;
+		bullet->FindComponent<PhysicsComponent>(ComponentTypes::Physics)->mVelocity = { 0, -100 }; 
 	}
 	else if ( mDown )
 	{
 		mTextPosition.y += 40.0f * fDeltaT * 3;
+		bullet->FindComponent<PhysicsComponent>(ComponentTypes::Physics)->mVelocity = { 0, 100 };
 	}
 	if (mLeft)
 	{
 		mTextPosition.x -= 40.0f * fDeltaT * 3;
+		bullet->FindComponent<PhysicsComponent>(ComponentTypes::Physics)->mVelocity = { -100, 0 };
 	}
 	else if (mRight)
 	{
 		mTextPosition.x += 40.0f * fDeltaT * 3;  
+		bullet->FindComponent<PhysicsComponent>(ComponentTypes::Physics)->mVelocity = { 100, 0 }; 
 	}
 
 

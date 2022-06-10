@@ -9,6 +9,7 @@
 #include "Game/Public/Plant.h"
 #include "Game/Public/GameObjectHandle.h"  
 #include "Game/Public/GameObjectManager.h" 
+#include "Game/Public/Transform.h"
 // SelectDrink STATE
 
 void State::RunState()
@@ -100,12 +101,9 @@ void CreatePlantState::ExitState()
 	//}
 	// 
 	//coins.clear();
-
-	mObj = new Plant(plantPositions[currentPosition], { 0,0 }, 10, 0, 30, "Richard");
-	plants.push_back(dynamic_cast<Plant*>(mObj));
-	mObj->Initialize();
-	GameObjectHandle* mCurrentObjectHandle = new GameObjectHandle(Hash::GenerateHash(dynamic_cast<Plant*>(mObj))); 
-	currentPosition++;   
+	if (currentPlant >= 4) return; 
+	plants[currentPlant]->Initialize(); 
+	currentPlant++;   
 }
 
 
@@ -125,11 +123,10 @@ void CreatePlantState::RunState()
 	//	xPos = xPos + 50;
 	//	coins.push_back(coin);
 	//}
-
 	for (Plant* plant : plants) {
-		plant->mFlowerSize = counter/6;  
-	}
-
+		if (plant->CurrentObjectHandle->IsValid() && !plant->CheckIfMaxSize())  
+			plant->mFlowerSize = counter / 6;
+	} 
 	State::RunState(); 
 	 
 }
@@ -190,9 +187,9 @@ void WaterPlantState::EnterState()
 
 	xPos = 500;
 
-	mObj = new Bullet({ plantPositions[currentPosition].x, plantPositions[currentPosition].y + 30}, {0,0}, 5);  
+	mObj = new Bullet({ plants[currentPlant]->getPosition(), {0,0}, 5 }); 
 	mObj->Initialize();
-	currentPosition++; 
+	currentPlant++; 
 
 }
 
@@ -269,7 +266,7 @@ void PlantGrowthState::RunState()
 	c.mColor[3] = 250;
 
 
-	 
+
 
 	State::RunState();
 
