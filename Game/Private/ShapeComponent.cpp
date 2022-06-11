@@ -1,6 +1,6 @@
 #include "Game/Public/ShapeComponent.h"
 
-ShapeComponent::ShapeComponent(GameObject* Owner):Component(Owner)
+ShapeComponent::ShapeComponent(GameObject* Owner, exColor color):Component(Owner),mShapeColor(color)
 {
 }
 

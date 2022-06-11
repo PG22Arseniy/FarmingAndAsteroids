@@ -26,7 +26,7 @@ class State
 {
 public:
 
-	State(GameObject * param);
+	State(GameObject * param, std::vector<Plant*> plantList);
 
 	virtual StateDefinations GetState() = 0;
 	virtual void EnterState();
@@ -34,17 +34,17 @@ public:
 	virtual void RunState();
 	int counter = 0;
 
-	//std::list<Plant*> plants; 
+	std::vector<Plant*> plants; 
 	 
 	GameObject* mObj;
-	exVector2 plantPositions[4] = { {150, 250}, {350,250}, { 150, 450 }, { 350, 450 } }; 
+	//exVector2 plantPositions[4] = { {150, 250}, {350,250}, { 150, 450 }, { 350, 450 } }; 
 
-	Plant * plant1 = new Plant(plantPositions[0], { 0,0 }, 10, 0, 30, "Richard");
-	Plant * plant2 = new Plant(plantPositions[1], { 0,0 }, 10, 0, 30, "Becka");
-	Plant * plant3 = new Plant(plantPositions[2], { 0,0 }, 10, 0, 30, "Jane"); 
-	Plant * plant4 = new Plant(plantPositions[3], { 0,0 }, 10, 0, 30, "John"); 
+	//Plant * plant1 = new Plant(plantPositions[0], { 0,0 }, 10, 0, 30, "Richard");
+	//Plant * plant2 = new Plant(plantPositions[1], { 0,0 }, 10, 0, 30, "Becka");
+	//Plant * plant3 = new Plant(plantPositions[2], { 0,0 }, 10, 0, 30, "Jane"); 
+	//Plant * plant4 = new Plant(plantPositions[3], { 0,0 }, 10, 0, 30, "John"); 
 	
-	Plant* plants[4] = { plant1,plant2,plant3,plant4 };    
+  
 
 	int currentPlant = 0;  
 
@@ -62,7 +62,7 @@ class SelectState : public State//<StateDefinations::SelectDrink>
 
 public:
 
-	SelectState(GameObject * param);
+	SelectState(GameObject * param, std::vector<Plant*> plantList);
 	StateDefinations GetState() override;
 	void EnterState() override;
 	void ExitState() override;
@@ -76,7 +76,7 @@ class CreateDrinkState : public State//<StateDefinations::CreateDrink>
 
 public: // #Hydrated
 
-	CreateDrinkState(GameObject * param);
+	CreateDrinkState(GameObject * param, std::vector<Plant*> plantList);
 	StateDefinations GetState() override;
 	void EnterState() override;
 	void ExitState() override;
@@ -92,7 +92,7 @@ class CreatePlantState : public State//<StateDefinations::InsertCoins>
 
 public: // Couldn't think about a funny idea
 
-	CreatePlantState(GameObject * param);
+	CreatePlantState(GameObject * param, std::vector<Plant*> plantList);
 	StateDefinations GetState() override;
 	void EnterState() override;
 	void ExitState() override;
@@ -106,7 +106,7 @@ class PlantGrowthState : public State//<StateDefinations::InsertCoins>
 
 public: // Couldn't think about a funny idea
 
-	PlantGrowthState(GameObject* param); 
+	PlantGrowthState(GameObject* param, std::vector<Plant*> plantList);
 	StateDefinations GetState() override;
 	void EnterState() override;
 	void ExitState() override;
@@ -121,7 +121,7 @@ class WaterPlantState : public State//<StateDefinations::InsertCoins>
 
 public: // Couldn't think about a funny idea
 
-	WaterPlantState(GameObject* param);
+	WaterPlantState(GameObject* param, std::vector<Plant*> plantList);
 	StateDefinations GetState() override;
 	void EnterState() override;
 	void ExitState() override;

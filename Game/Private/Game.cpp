@@ -20,7 +20,8 @@
 #include "Game/Public/Asteroid.h" 
 #include "Game/Public/Box.h"
 #include "Game/Public/Transform.h"
- 
+#include <thread> 
+#include <time.h> 
 #include <iostream>
 #include <list>
 #include <sstream>
@@ -122,30 +123,25 @@ void MyGame::OnEventsConsumed()
 //-----------------------------------------------------------------
 
 void MyGame::Run( float fDeltaT )
+{ 
+
+
+	
+	std::thread InputThread(&MyGame::Input,this);
+	std::thread PhysicsThread(&MyGame::Physics,this, fDeltaT);
+	std::thread RenderThread(&MyGame::Render,this); 
+	InputThread.join(); 
+	PhysicsThread.join();  
+	RenderThread.join(); 
+	StateMachine->RunStateMachine(mEngine);  
+	
+
+
+}
+
+
+void MyGame::Render()
 {
-	if ( mUp )
-	{
-		mTextPosition.y -= 40.0f * fDeltaT * 3;
-		bullet->FindComponent<PhysicsComponent>(ComponentTypes::Physics)->mVelocity = { 0, -100 }; 
-	}
-	else if ( mDown )
-	{
-		mTextPosition.y += 40.0f * fDeltaT * 3;
-		bullet->FindComponent<PhysicsComponent>(ComponentTypes::Physics)->mVelocity = { 0, 100 };
-	}
-	if (mLeft)
-	{
-		mTextPosition.x -= 40.0f * fDeltaT * 3;
-		bullet->FindComponent<PhysicsComponent>(ComponentTypes::Physics)->mVelocity = { -100, 0 };
-	}
-	else if (mRight)
-	{
-		mTextPosition.x += 40.0f * fDeltaT * 3;  
-		bullet->FindComponent<PhysicsComponent>(ComponentTypes::Physics)->mVelocity = { 100, 0 }; 
-	}
-
-
-
 	exColor b;
 
 	b.mColor[0] = 200;
@@ -154,38 +150,49 @@ void MyGame::Run( float fDeltaT )
 	b.mColor[3] = 255;
 
 
-	exVector2 boxPosition;
-	boxPosition.x = 250;
-	boxPosition.y = 250;
-
-	// rendering all boxes: 
-	for (BoxComponent* box : BoxComponent::AllGameBoxComponents) {
-		box->Render(mEngine, b, 1);
-	} 
-
-	
-
-	StateMachine->RunStateMachine(mEngine); 
-	
-
-
-	// Updating all objects with physics component every frame
-	for (PhysicsComponent* phComp : PhysicsComponent::mAllPhysicsComponents) {
-		phComp->Update(fDeltaT); 
-	}
-
-
-	exColor c; 
+	exColor c;
 
 	c.mColor[0] = 75;
-	c.mColor[1] = 75;  
+	c.mColor[1] = 75;
 	c.mColor[2] = 100;
-	c.mColor[3] = 255; 
-	
-	// rendering all circles:
-	for (CircleComponent* circle : CircleComponent::AllCircleComponents) {
-		circle->Render(mEngine, c, 1); 
+	c.mColor[3] = 255;
+	// rendering all boxes: 
+	for (BoxComponent* box : BoxComponent::AllGameBoxComponents) {
+		box->Render(mEngine, 1);
 	}
+	for (CircleComponent* circle : CircleComponent::AllCircleComponents) {
+		circle->Render(mEngine, 1); 
+	}
+}
 
+void MyGame::Physics(float fDeltaT)
+{
+	// Updating all objects with physics component every frame
+	for (PhysicsComponent* phComp : PhysicsComponent::mAllPhysicsComponents) {
+		phComp->Update(fDeltaT);
+	}
+}
 
+void MyGame::Input()
+{
+	if (mUp)
+	{
+	
+		bullet->FindComponent<PhysicsComponent>(ComponentTypes::Physics)->mVelocity = { 0, -100 };
+	}
+	else if (mDown)
+	{
+	
+		bullet->FindComponent<PhysicsComponent>(ComponentTypes::Physics)->mVelocity = { 0, 100 };
+	}
+	if (mLeft)
+	{
+
+		bullet->FindComponent<PhysicsComponent>(ComponentTypes::Physics)->mVelocity = { -100, 0 };
+	}
+	else if (mRight)
+	{
+
+		bullet->FindComponent<PhysicsComponent>(ComponentTypes::Physics)->mVelocity = { 100, 0 };
+	}
 }

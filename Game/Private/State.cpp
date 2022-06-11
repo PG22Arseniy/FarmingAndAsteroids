@@ -18,9 +18,10 @@ void State::RunState()
 }
 
 
-State::State(GameObject* param)
+State::State(GameObject* param, std::vector<Plant*> plantList)
 {
 	mObj = param;
+	plants = plantList; 
 }
 
 void State::EnterState()
@@ -28,7 +29,7 @@ void State::EnterState()
 	counter = 0;
 }
 
-SelectState::SelectState(GameObject* param):State(param)
+SelectState::SelectState(GameObject* param, std::vector<Plant*> plantList):State(param, plantList)
 {
 
 }
@@ -74,7 +75,7 @@ void SelectState::RunState()
 
 // InsertCoins STATE
 
-CreatePlantState::CreatePlantState(GameObject* param): State (param)
+CreatePlantState::CreatePlantState(GameObject* param, std::vector<Plant*> plantList): State (param, plantList)
 {
 }
 
@@ -123,10 +124,6 @@ void CreatePlantState::RunState()
 	//	xPos = xPos + 50;
 	//	coins.push_back(coin);
 	//}
-	for (Plant* plant : plants) {
-		if (plant->CurrentObjectHandle->IsValid() && !plant->CheckIfMaxSize())  
-			plant->mFlowerSize = counter / 6;
-	} 
 	State::RunState(); 
 	 
 }
@@ -134,7 +131,7 @@ void CreatePlantState::RunState()
 
 // CreateDrink STATE
 
-CreateDrinkState::CreateDrinkState(GameObject* param): State(param)
+CreateDrinkState::CreateDrinkState(GameObject* param, std::vector<Plant*> plantList): State(param, plantList)
 {
 }
 
@@ -171,7 +168,7 @@ void CreateDrinkState::RunState()
 // WATER PLANT
 
 
-WaterPlantState::WaterPlantState(GameObject* param) : State(param)
+WaterPlantState::WaterPlantState(GameObject* param, std::vector<Plant*> plantList) : State(param, plantList)
 {
 }
 
@@ -231,7 +228,7 @@ void WaterPlantState::RunState()
 //  PlantGrowth
 
 
-PlantGrowthState::PlantGrowthState(GameObject* param) : State(param)
+PlantGrowthState::PlantGrowthState(GameObject* param, std::vector<Plant*> plantList) : State(param, plantList)
 {
 }
 
@@ -265,7 +262,10 @@ void PlantGrowthState::RunState()
 	c.mColor[2] = 50;
 	c.mColor[3] = 250;
 
-
+	for (Plant* plant : plants) {
+		if (plant->CurrentObjectHandle->IsValid() && !plant->CheckIfMaxSize())
+			plant->mFlowerSize = counter / 6; 
+	}
 
 
 	State::RunState();

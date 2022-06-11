@@ -38,6 +38,10 @@ public:
 
 	virtual void				Run( float fDeltaT );
 
+	void Render();
+	void Physics(float fDeltaT); 
+	void Input();  
+
 private:
 
 	exEngineInterface*			mEngine;

@@ -7,7 +7,7 @@
 #include "iostream" 
 std::vector<CircleComponent*> CircleComponent::AllCircleComponents;
 
-CircleComponent::CircleComponent(GameObject* Owner, float radius):ShapeComponent(Owner), mRadius(radius)
+CircleComponent::CircleComponent(GameObject* Owner, float radius, exColor color) :ShapeComponent(Owner, color), mRadius(radius)
 {
 }
 
@@ -25,7 +25,7 @@ ComponentTypes CircleComponent::GetType()
 {
 	return ComponentTypes::Circle;
 }
-void CircleComponent::Render(exEngineInterface* engine, exColor color, int layer) {
+void CircleComponent::Render(exEngineInterface* engine, int layer) {
 	exVector2 position = mOwningGameObject->FindComponent<Transform>(ComponentTypes::Transform)->mPosition;
 	//color = mOwningGameObject->mColor; 
 	float margin = 0;
@@ -35,8 +35,8 @@ void CircleComponent::Render(exEngineInterface* engine, exColor color, int layer
 		mRadius = plant->mFlowerSize; 
 	}
 	if (!(mOwningGameObject->mColor.mColor[0] == 0 && mOwningGameObject->mColor.mColor[1] == 0 && mOwningGameObject->mColor.mColor[2] == 0 && mOwningGameObject->mColor.mColor[3] == 0))
-		color = mOwningGameObject->mColor; 
+		mShapeColor = mOwningGameObject->mColor; 
 	
-	engine->DrawCircle({ position.x, position.y - margin}, mRadius, color, layer);  
+	engine->DrawCircle({ position.x, position.y - margin}, mRadius, mShapeColor, layer);   
 }  
 

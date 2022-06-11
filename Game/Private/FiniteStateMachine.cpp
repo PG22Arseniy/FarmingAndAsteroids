@@ -1,16 +1,32 @@
 #include "Game/Public/FiniteStateMachine.h"
 #include <stdlib.h>
 #include <time.h>
+#include <vector>
 #include "Utils.h"
 
 FiniteStateMachine::FiniteStateMachine(StateDefinations StartingState)
 {
-	//TODO 
-	mSelectState = new SelectState(nullptr);
-	mCreatePlantState = new CreatePlantState(nullptr);
-	mCreateDrinkState = new CreateDrinkState(nullptr); 
-	mWaterPlantState = new WaterPlantState(nullptr); 
-	mPlantGrowthState = new PlantGrowthState(nullptr);
+
+
+
+	//TODO
+	exVector2 plantPositions[4] = { {150, 250}, {350,250}, { 150, 450 }, { 350, 450 } }; 
+
+	Plant * plant1 = new Plant(plantPositions[0], { 0,0 }, 10, 0, 30, "Richard");
+	Plant * plant2 = new Plant(plantPositions[1], { 0,0 }, 10, 0, 30, "Becka");
+	Plant * plant3 = new Plant(plantPositions[2], { 0,0 }, 10, 0, 30, "Jane"); 
+	Plant * plant4 = new Plant(plantPositions[3], { 0,0 }, 10, 0, 30, "John"); 
+
+	std::vector<Plant*> plants = {plant1,plant2,plant3, plant4};
+
+	
+
+
+	mSelectState = new SelectState(nullptr, plants);
+	mCreatePlantState = new CreatePlantState(nullptr, plants);
+	mCreateDrinkState = new CreateDrinkState(nullptr, plants);
+	mWaterPlantState = new WaterPlantState(nullptr, plants);
+	mPlantGrowthState = new PlantGrowthState(nullptr, plants);
 
 	switch (StartingState)
 	{
@@ -111,8 +127,8 @@ void FiniteStateMachine::RunStateMachine(exEngineInterface* engine)
 			if (CurrentWaterPlantState->counter >= WaterDrink_DURATION)
 			{
 				mCurrentState->ExitState();
-				mCurrentState = mCreatePlantState; 
-				mCurrentState->EnterState();
+				mCurrentState = mPlantGrowthState; 
+				mCurrentState->EnterState(); 
 				break;
 			}
 		}
