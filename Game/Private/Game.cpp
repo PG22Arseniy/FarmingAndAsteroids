@@ -10,9 +10,9 @@
 #include "Game/Public/PhysicsComponent.h"
 #include "Engine/Public/EngineInterface.h"
 #include "Engine/Public/SDL.h" 
-#include "Game/Public/FiniteStateMachine.h" 
-#include "Game/Public/FiniteStateVendingMachine.h" 
-#include "Game/Public/FiniteStateMachineStopWatch.h" 
+
+#include "Game/Public/FiniteStateMachine.h"  
+
 #include "Game/Public/CircleComponent.h"
 #include "Game/Public/BoxComponent.h"
 #include "Game/Public/GameObject.h"
@@ -20,7 +20,8 @@
 #include "Game/Public/Asteroid.h" 
 #include "Game/Public/Box.h"
 #include "Game/Public/Transform.h"
- 
+#include <thread> 
+#include <time.h> 
 #include <iostream>
 #include <list>
 #include <sstream>
@@ -61,14 +62,11 @@ void MyGame::Initialize( exEngineInterface* pEngine )
 	mTextPosition.x = 50.0f;
 	mTextPosition.y = 50.0f;
 	GameObject owner;
+	 
+	StateMachine = new FiniteStateMachine(StateDefinations::Select);   
 	
-	
-	TrafficLightStateMachine = new FiniteStateMachine(StateDefinations::Green);
-	StopWatchStateMachine = new FiniteStateMachineStopWatch(StopWatchStateDefinations::Going);    
-	VendingStateMachine = new FiniteStateVendingMachine(VendingStateDefinations::SelectDrink);  
-	
-	
-
+	bullet = new Bullet({ 500 ,500 }, { 0, 0 }, 5); 
+	bullet->Initialize();
 	exVector2 ballPos;
 	ballPos.x = 300; 
 	ballPos.y = 200;
@@ -116,22 +114,8 @@ void MyGame::OnEventsConsumed()
 
 
 
-	// toggle between state machines
-	if (pState[SDL_SCANCODE_1]) {
-		mVendingMachine = false;
-		mStopWatch = false;
-		mTrafficLight = true;
-	}
-	if (pState[SDL_SCANCODE_2]) {
-	
-		mVendingMachine = false;
-		mTrafficLight = false;
-		mStopWatch = true;
-	}
 	if (pState[SDL_SCANCODE_3]) { 
-		mStopWatch = false;
-		mTrafficLight = false;
-		mVendingMachine = true;
+		//TODO: run statemachine on command 
 	}
 }
 
@@ -139,26 +123,25 @@ void MyGame::OnEventsConsumed()
 //-----------------------------------------------------------------
 
 void MyGame::Run( float fDeltaT )
+{ 
+
+
+	
+	std::thread InputThread(&MyGame::Input,this);
+	std::thread PhysicsThread(&MyGame::Physics,this, fDeltaT);
+	std::thread RenderThread(&MyGame::Render,this); 
+	InputThread.join(); 
+	PhysicsThread.join();  
+	RenderThread.join(); 
+	StateMachine->RunStateMachine(mEngine);  
+	
+
+
+}
+
+
+void MyGame::Render()
 {
-	if ( mUp )
-	{
-		mTextPosition.y -= 40.0f * fDeltaT * 3;
-	}
-	else if ( mDown )
-	{
-		mTextPosition.y += 40.0f * fDeltaT * 3;
-	}
-	if (mLeft)
-	{
-		mTextPosition.x -= 40.0f * fDeltaT * 3;
-	}
-	else if (mRight)
-	{
-		mTextPosition.x += 40.0f * fDeltaT * 3;  
-	}
-
-
-
 	exColor b;
 
 	b.mColor[0] = 200;
@@ -167,47 +150,49 @@ void MyGame::Run( float fDeltaT )
 	b.mColor[3] = 255;
 
 
-	exVector2 boxPosition;
-	boxPosition.x = 250;
-	boxPosition.y = 250;
+	exColor c;
 
+	c.mColor[0] = 75;
+	c.mColor[1] = 75;
+	c.mColor[2] = 100;
+	c.mColor[3] = 255;
 	// rendering all boxes: 
 	for (BoxComponent* box : BoxComponent::AllGameBoxComponents) {
-		box->Render(mEngine, b, 1);
-	} 
-
- 
-	if (mTrafficLight) {
-
-		TrafficLightStateMachine->RunStateMachine();
+		box->Render(mEngine, 1);
 	}
-	if (mVendingMachine) {
-
-		VendingStateMachine->RunStateMachine(mEngine); 
+	for (CircleComponent* circle : CircleComponent::AllCircleComponents) {
+		circle->Render(mEngine, 1); 
 	}
-	if (mStopWatch) {
+}
 
-		StopWatchStateMachine->RunStateMachine(fDeltaT , mEngine);
-	
-	}
-
+void MyGame::Physics(float fDeltaT)
+{
 	// Updating all objects with physics component every frame
 	for (PhysicsComponent* phComp : PhysicsComponent::mAllPhysicsComponents) {
-		phComp->Update(fDeltaT); 
+		phComp->Update(fDeltaT);
 	}
+}
 
-
-	exColor c; 
-
-	c.mColor[0] = 25;
-	c.mColor[1] = 255;
-	c.mColor[2] = 0;
-	c.mColor[3] = 255;
+void MyGame::Input()
+{
+	if (mUp)
+	{
 	
-	// rendering all circles:
-	for (CircleComponent* circle : CircleComponent::AllCircleComponents) {
-		circle->Render(mEngine, c, 1); 
+		bullet->FindComponent<PhysicsComponent>(ComponentTypes::Physics)->mVelocity = { 0, -100 };
 	}
+	else if (mDown)
+	{
+	
+		bullet->FindComponent<PhysicsComponent>(ComponentTypes::Physics)->mVelocity = { 0, 100 };
+	}
+	if (mLeft)
+	{
 
+		bullet->FindComponent<PhysicsComponent>(ComponentTypes::Physics)->mVelocity = { -100, 0 };
+	}
+	else if (mRight)
+	{
 
+		bullet->FindComponent<PhysicsComponent>(ComponentTypes::Physics)->mVelocity = { 100, 0 };
+	}
 }

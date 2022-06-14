@@ -5,10 +5,9 @@
 #include "Game/Public/PhysicsComponent.h"
 
 
-
 GameObject::GameObject()
 {
-}
+} 
 // Destroyiing all the Componetns linked to Our Game Object.
 GameObject::~GameObject()
 {
@@ -36,6 +35,15 @@ void GameObject::Initialize()
 void GameObject::AddComponent(Component* ComponentToAdd)
 {
     mComponents.push_back(ComponentToAdd);
+}
+void GameObject::RemoveComponents()
+{ 
+
+	for (Component* comp : mComponents) {
+		comp->Destroy(); 
+	}
+
+	mComponents.clear(); 
 }
 
 

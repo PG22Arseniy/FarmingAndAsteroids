@@ -1,15 +1,27 @@
 #include "Game/Public/State.h"
 #include "Utils.h" 
 #include "Game/Public/Ball.h"
-#include "Game/Public/TrafficLight.h"
+#include "Game/Public/Bullet.h"
+#include "Game/Public/box.h"
 #include "Engine/Public/EngineInterface.h"
 #include "Engine/Public/SDL.h" 
 #include "Game/Public/Game.h"
-// Green STATE
+#include "Game/Public/Plant.h"
+#include "Game/Public/GameObjectHandle.h"  
+#include "Game/Public/GameObjectManager.h" 
+#include "Game/Public/Transform.h"
+// SelectDrink STATE
 
 void State::RunState()
 {
 	++counter;
+}
+
+
+State::State(GameObject* param, std::vector<Plant*> plantList)
+{
+	mObj = param;
+	plants = plantList; 
 }
 
 void State::EnterState()
@@ -17,110 +29,308 @@ void State::EnterState()
 	counter = 0;
 }
 
-StateDefinations GreenState::GetState()
+SelectState::SelectState(GameObject* param, std::vector<Plant*> plantList):State(param, plantList)
 {
-	return StateDefinations::Green;
+
+}
+
+StateDefinations SelectState::GetState()
+{
+	return StateDefinations::Select;
 }
 
 
-void GreenState::EnterState()
+void SelectState::EnterState()
 {
 	State::EnterState();
-	exColor c;
-	c.mColor[0] = 25;
-	c.mColor[1] = 255;
-	c.mColor[2] = 0;
-	c.mColor[3] = 255;
 
-	trafficLight = new TrafficLight({ 100,100 }, { 0, 0 }, 40, c); 
-	trafficLight->Initialize(); 
-	trafficLight->mColor = c; 
+
 
 }
 
-void GreenState::ExitState()
+void SelectState::ExitState()
 {
-	delete trafficLight; 
+	NewDrinkState = false;
+	NewPlantState = false; 
+
 }
 
 
-void GreenState::RunState()
+void SelectState::RunState()
 {
 	State::RunState();
 
+	if (pState[SDL_SCANCODE_SPACE]) {
 
+		NewDrinkState = true;
+
+	}
+	if (pState[SDL_SCANCODE_RETURN]) {
+
+		
+		NewPlantState = true; 
+	}
 }
 
 
-// Yellow STATE
+// Create Plant:
 
-StateDefinations YellowState::GetState()
+CreatePlantState::CreatePlantState(GameObject* param, std::vector<Plant*> plantList): State (param, plantList)
 {
-	return StateDefinations::Yellow;
+	plants = plantList; 
+}
+
+StateDefinations CreatePlantState::GetState()
+{
+	return StateDefinations::CreatePlant;
 }
 
 
-void YellowState::EnterState()
+void CreatePlantState::EnterState()
 {
 	State::EnterState();
+
+}
+
+void CreatePlantState::ExitState()
+{
+
+	currentPlant = 0; 
+	for (Plant* plant : plants) {
+		if (plant->CurrentObjectHandle->IsValid()) 
+			currentPlant++;
+	}
+	
+	if (currentPlant >= 4) return; 
+
+	plants[currentPlant]->Initialize();
+
+	
+
+   
+}
+
+
+void CreatePlantState::RunState()
+{
+	exColor c;
+	c.mColor[0] = 250; 
+	c.mColor[1] = 250;
+	c.mColor[2] = 50;
+	c.mColor[3] = 250;
+
+	
+	//if (counter % 20 == 0) {
+	//	Bullet* coin = new Bullet({ xPos ,350 }, { 0, 0 }, 5); 
+	//
+	//
+	//	coin->Initialize();
+	//	coin->mColor = c; 
+	//	xPos = xPos + 50;
+	//	coins.push_back(coin);
+	//}
+	State::RunState(); 
+	 
+}
+
+
+// CreateDrink STATE
+
+CreateDrinkState::CreateDrinkState(GameObject* param, std::vector<Plant*> plantList): State(param, plantList)
+{
+}
+
+StateDefinations CreateDrinkState::GetState()
+{
+	return StateDefinations::CreateDrink;
+}
+
+
+void CreateDrinkState::EnterState()
+{
+	State::EnterState();
+}
+
+void CreateDrinkState::ExitState()
+{
+	for (Drink* drink : drinks) {
+		delete drink;
+	}
+	drinks.clear();
+}
+
+
+void CreateDrinkState::RunState()
+
+{
+	drink = new Drink({ 650 ,100 }, { 0, 0 }, 50, counter/4);        
+	drink->Initialize();
+	drinks.push_back(drink); 
+	State::RunState();
+
+}
+
+// WATER PLANT
+
+
+WaterPlantState::WaterPlantState(GameObject* param, std::vector<Plant*> plantList) : State(param, plantList)
+{
+}
+
+StateDefinations WaterPlantState::GetState()
+{
+	return StateDefinations::WaterPlant;
+}
+
+
+void WaterPlantState::EnterState()
+{
+	State::EnterState();
+	currentPlant = 0; 
+	for (Plant* plant : plants) {
+		if (plant->mWaterd)
+			currentPlant++; 
+	}
+
+	mObj = new Bullet({ plants[currentPlant]->getPosition().x,plants[currentPlant]->getPosition().y + 20 }, { 0,0 }, 5); 
+
+	mObj->Initialize(); 
+
+
+}
+
+void WaterPlantState::ExitState() 
+{
+
+
+
+	if (plants[currentPlant]->CurrentObjectHandle->IsValid()) {
+		plants[currentPlant]->mWaterd = true; 
+	}
+	//for (Bullet* coin : coins) {
+	//	delete coin;
+	//}
+	// 
+	//coins.clear();
+	delete mObj; 
+}
+
+
+void WaterPlantState::RunState()
+{
 	exColor c;
 	c.mColor[0] = 250;
-	c.mColor[1] = 250; 
-	c.mColor[2] = 50;  
-	c.mColor[3] = 250; 
-
-	trafficLight = new TrafficLight({ 100,300 }, { 0, 0 }, 40, c);
-	trafficLight->Initialize();
-	trafficLight->mColor = c;
-
-}
-
-void YellowState::ExitState()
-{
-	delete trafficLight; 
-}
+	c.mColor[1] = 250;
+	c.mColor[2] = 50;
+	c.mColor[3] = 250;
 
 
-void YellowState::RunState()
-{
+
+	//if (counter % 20 == 0) {
+	//	Bullet* coin = new Bullet({ xPos ,350 }, { 0, 0 }, 5); 
+	//
+	//
+	//	coin->Initialize();
+	//	coin->mColor = c; 
+	//	xPos = xPos + 50;
+	//	coins.push_back(coin);
+	//}
 	State::RunState();
 
-
 }
 
 
-// Red STATE
+//  PlantGrowth
 
-StateDefinations RedState::GetState()
+
+PlantGrowthState::PlantGrowthState(GameObject* param, std::vector<Plant*> plantList) : State(param, plantList)
 {
-	return StateDefinations::Red;
+}
+
+StateDefinations PlantGrowthState::GetState()
+{
+	return StateDefinations::PlantGrowth;
 }
 
 
-void RedState::EnterState()
+void PlantGrowthState::EnterState()
+{
+	State::EnterState();
+	gameover = false; 
+}
+
+void PlantGrowthState::ExitState()
+{
+	if (gameover) {
+		for (Plant* plant : plants) {
+			plant->Uninitialize(); 
+		}
+	}
+
+}
+
+
+void PlantGrowthState::RunState()
+{
+	int fullPlants = 0;
+	for (Plant* plant : plants) {
+		if (plant->CurrentObjectHandle->IsValid() && !plant->CheckIfMaxSize() && plant->mWaterd)  
+			plant->mFlowerSize = counter / 6; 
+		if (plant->CurrentObjectHandle->IsValid() && plant->CheckIfMaxSize())
+			fullPlants++;
+
+		if (fullPlants == 4) { 
+			gameover = true;
+		}
+	}
+
+	State::RunState();
+}
+
+
+
+GameOverState::GameOverState(GameObject* param, std::vector<Plant*> plantList) :State(param, plantList)
+{
+
+}
+
+StateDefinations GameOverState::GetState()
+{
+	return StateDefinations::GameOver;
+}
+
+
+void GameOverState::EnterState()
 {
 	State::EnterState();
 
-	exColor c;
-	c.mColor[0] = 150;
-	c.mColor[1] = 50;   
-	c.mColor[2] = 50;
-	c.mColor[3] = 250; 
-	trafficLight = new TrafficLight({ 100,500 }, { 0, 0 }, 40, c);  
-	trafficLight->Initialize();
-	trafficLight->mColor = c;
+
 
 }
 
-void RedState::ExitState()
+void GameOverState::ExitState()
 {
-	delete trafficLight;
+	NewDrinkState = false;
+	NewPlantState = false;
+
 }
 
 
-void RedState::RunState()
+void GameOverState::RunState()
 {
 	State::RunState();
 
-}
 
+
+
+	if (pState[SDL_SCANCODE_SPACE]) {
+
+		NewGameState = true;
+
+	}
+	if (pState[SDL_SCANCODE_RETURN]) {
+
+
+		NewGameState = true;
+	}
+}

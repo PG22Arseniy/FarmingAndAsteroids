@@ -8,6 +8,7 @@ class GameObject
 {
 public:
 	GameObject();
+
 	~GameObject();
 
 	virtual void Initialize();
@@ -16,6 +17,8 @@ public:
 
 	template<typename T>
 	T* FindComponent(ComponentTypes eType);
+
+	void RemoveComponents(); 
 
 	exColor mColor;
 

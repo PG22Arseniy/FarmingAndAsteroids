@@ -13,10 +13,9 @@
 #include "Game/Public/Box.h" 
 #include "Game/Public/Ship.h" 
 #include "Game/Public/Bullet.h"  
-#include "Game/Public/Asteroid.h" 
+#include "Game/Public/Asteroid.h"  
 #include "Game/Public/FiniteStateMachine.h"  
-#include "Game/Public/FiniteStateVendingMachine.h"  
-#include "Game/Public/FiniteStateMachineStopWatch.h"  
+ 
 
 
 //-----------------------------------------------------------------
@@ -39,6 +38,10 @@ public:
 
 	virtual void				Run( float fDeltaT );
 
+	void Render();
+	void Physics(float fDeltaT); 
+	void Input();  
+
 private:
 
 	exEngineInterface*			mEngine;
@@ -57,9 +60,7 @@ private:
 	bool Repeat;  
 	bool Continue; 
 
-	FiniteStateMachine*			TrafficLightStateMachine; 
-	FiniteStateMachineStopWatch*			StopWatchStateMachine;
-	FiniteStateVendingMachine*	VendingStateMachine;   
+	FiniteStateMachine*	StateMachine;    
 	Ball*						ball;  
 	Ball*						ball2;
 	Box*						box;  

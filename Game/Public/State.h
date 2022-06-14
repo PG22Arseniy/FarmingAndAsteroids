@@ -1,65 +1,138 @@
 
 #pragma once
-#include "Game/Public/TrafficLight.h"
+#include "vector"
+#include "Game/Public/Box.h"
+#include "Game/Public/Plant.h"
+#include "Game/Public/Drink.h"
+#include "Game/Public/Square.h"
+#include "Game/Public/Bullet.h"
 #include "Engine/Public/EngineInterface.h"
 #include "Engine/Public/SDL.h" 
+#include <algorithm>
+#include <iostream>
+#include <list>
 enum class StateDefinations
 {
-	Green,
-	Yellow,
-	Red,
+	Select,
+	CreatePlant,
+	CreateDrink, 
+	WaterPlant,
+	AsteroidAttack,
+	PlantGrowth,
+	GameOver
 };
 
 //template <StateDefinations StateDefination>
 class State
-{	
+{
 public:
+
+	State(GameObject * param, std::vector<Plant*> plantList);
+
 	virtual StateDefinations GetState() = 0;
 	virtual void EnterState();
 	virtual void ExitState() = 0;
 	virtual void RunState();
 	int counter = 0;
-	TrafficLight* trafficLight; 
+
+	std::vector<Plant*> plants; 
+	 
+	GameObject* mObj;
+
+	int currentPlant = 0;  
+
+	bool NewDrinkState = false; 
+	bool NewPlantState = false; 
+
+
+	int nKeys = 0;
+	const Uint8* pState = SDL_GetKeyboardState(&nKeys); 
 
 };
 
 
-class GreenState : public State//<StateDefinations::Green>
+class SelectState : public State//<StateDefinations::SelectDrink>
 {
 
 public:
 
-	GreenState() {};
+	SelectState(GameObject * param, std::vector<Plant*> plantList);
 	StateDefinations GetState() override;
 	void EnterState() override;
 	void ExitState() override;
 	void RunState() override;
 
-	int ThirstMeter;
 
 };
 
-class RedState : public State//<StateDefinations::Red>
+class CreateDrinkState : public State//<StateDefinations::CreateDrink>
 {
 
 public: // #Hydrated
 
-	RedState() {};
+	CreateDrinkState(GameObject * param, std::vector<Plant*> plantList);
 	StateDefinations GetState() override;
 	void EnterState() override;
 	void ExitState() override;
 	void RunState() override;
+
+	std::list<Drink*> drinks;   
+	Drink* drink; 
 };
 
 
-class YellowState : public State//<StateDefinations::Yellow>
+class CreatePlantState : public State//<StateDefinations::InsertCoins>
 {
 
 public: // Couldn't think about a funny idea
 
-	YellowState() {};
+	CreatePlantState(GameObject * param, std::vector<Plant*> plantList);
+	StateDefinations GetState() override;
+	void EnterState() override;
+	void ExitState() override;
+	void RunState() override; 
+   
+};
+
+class PlantGrowthState : public State//<StateDefinations::InsertCoins>
+{
+
+public: // Couldn't think about a funny idea
+
+	PlantGrowthState(GameObject* param, std::vector<Plant*> plantList);
 	StateDefinations GetState() override;
 	void EnterState() override;
 	void ExitState() override;
 	void RunState() override;
+
+	bool gameover = false;  
+};
+
+
+class WaterPlantState : public State//<StateDefinations::InsertCoins>
+{
+
+public: // Couldn't think about a funny idea
+
+	WaterPlantState(GameObject* param, std::vector<Plant*> plantList);
+	StateDefinations GetState() override;
+	void EnterState() override;
+	void ExitState() override;
+	void RunState() override;
+
+};
+
+
+class GameOverState : public State//<StateDefinations::InsertCoins>
+{
+
+public: // Couldn't think about a funny idea
+
+	GameOverState(GameObject* param, std::vector<Plant*> plantList);
+	StateDefinations GetState() override;
+	void EnterState() override;
+	void ExitState() override;
+	void RunState() override; 
+
+	bool NewGameState = false;
 };

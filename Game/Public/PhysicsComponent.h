@@ -21,7 +21,7 @@ public:
 	bool IsColliding(const PhysicsComponent* OtherPhysicsComponent) const;
 
 	virtual void Update(float pDeltaTime);
-
+	exVector2 mVelocity; 
 private:
 
 	// Store the Tranform of the Owning Game Object
@@ -30,7 +30,7 @@ private:
 	float mGravityScale;
 	float mMass;
 	//Replace this with ExVector2 from engine X
-	exVector2 mVelocity;
+
 	bool bIsCollisionEnabled; 
 
 	// add core functionality to Global Gravity Optional

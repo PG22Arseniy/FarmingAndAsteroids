@@ -23,7 +23,7 @@ Ship::Ship(exVector2 position, exVector2 velocity, float size)
 void Ship::Initialize()
 {
 	//Added a Circle and box COmponent to our Ship;
-	AddComponent(new BoxComponent(this, mSize * 40, mSize * 10));
+	AddComponent(new BoxComponent(this, mSize * 40, mSize * 10)); 
 	AddComponent(new CircleComponent(this, mSize * 10));    
 	AddComponent(new PhysicsComponent(this, true, 0.5f, 5.0f, mVelocity));
 	AddComponent(new Transform(this, mPosition));
