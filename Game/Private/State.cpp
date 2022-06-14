@@ -73,10 +73,11 @@ void SelectState::RunState()
 }
 
 
-// InsertCoins STATE
+// Create Plant:
 
 CreatePlantState::CreatePlantState(GameObject* param, std::vector<Plant*> plantList): State (param, plantList)
 {
+	plants = plantList; 
 }
 
 StateDefinations CreatePlantState::GetState()
@@ -89,32 +90,36 @@ void CreatePlantState::EnterState()
 {
 	State::EnterState();
 
-
-	xPos = 500; 
-
-
 }
 
 void CreatePlantState::ExitState()
 {
-	//for (Bullet* coin : coins) {
-	//	delete coin;
-	//}
-	// 
-	//coins.clear();
+
+	currentPlant = 0; 
+	for (Plant* plant : plants) {
+		if (plant->CurrentObjectHandle->IsValid()) 
+			currentPlant++;
+	}
+	
 	if (currentPlant >= 4) return; 
-	plants[currentPlant]->Initialize(); 
-	currentPlant++;   
+
+	plants[currentPlant]->Initialize();
+
+	
+
+   
 }
 
 
 void CreatePlantState::RunState()
 {
 	exColor c;
-	c.mColor[0] = 250;
+	c.mColor[0] = 250; 
 	c.mColor[1] = 250;
 	c.mColor[2] = 50;
 	c.mColor[3] = 250;
+
+	
 	//if (counter % 20 == 0) {
 	//	Bullet* coin = new Bullet({ xPos ,350 }, { 0, 0 }, 5); 
 	//
@@ -181,17 +186,27 @@ StateDefinations WaterPlantState::GetState()
 void WaterPlantState::EnterState()
 {
 	State::EnterState();
+	currentPlant = 0; 
+	for (Plant* plant : plants) {
+		if (plant->mWaterd)
+			currentPlant++; 
+	}
 
-	xPos = 500;
+	mObj = new Bullet({ plants[currentPlant]->getPosition().x,plants[currentPlant]->getPosition().y + 20 }, { 0,0 }, 5); 
 
-	mObj = new Bullet({ plants[currentPlant]->getPosition(), {0,0}, 5 }); 
-	mObj->Initialize();
-	currentPlant++; 
+	mObj->Initialize(); 
+
 
 }
 
 void WaterPlantState::ExitState() 
 {
+
+
+
+	if (plants[currentPlant]->CurrentObjectHandle->IsValid()) {
+		plants[currentPlant]->mWaterd = true; 
+	}
 	//for (Bullet* coin : coins) {
 	//	delete coin;
 	//}
@@ -241,33 +256,81 @@ StateDefinations PlantGrowthState::GetState()
 void PlantGrowthState::EnterState()
 {
 	State::EnterState();
-
-	xPos = 500;
-
-
-
+	gameover = false; 
 }
 
 void PlantGrowthState::ExitState()
 {
-	delete mObj;
+	if (gameover) {
+		for (Plant* plant : plants) {
+			plant->Uninitialize(); 
+		}
+	}
+
 }
 
 
 void PlantGrowthState::RunState()
 {
-	exColor c;
-	c.mColor[0] = 250;
-	c.mColor[1] = 250;
-	c.mColor[2] = 50;
-	c.mColor[3] = 250;
-
+	int fullPlants = 0;
 	for (Plant* plant : plants) {
-		if (plant->CurrentObjectHandle->IsValid() && !plant->CheckIfMaxSize())
+		if (plant->CurrentObjectHandle->IsValid() && !plant->CheckIfMaxSize() && plant->mWaterd)  
 			plant->mFlowerSize = counter / 6; 
+		if (plant->CurrentObjectHandle->IsValid() && plant->CheckIfMaxSize())
+			fullPlants++;
+
+		if (fullPlants == 4) { 
+			gameover = true;
+		}
 	}
 
+	State::RunState();
+}
 
+
+
+GameOverState::GameOverState(GameObject* param, std::vector<Plant*> plantList) :State(param, plantList)
+{
+
+}
+
+StateDefinations GameOverState::GetState()
+{
+	return StateDefinations::GameOver;
+}
+
+
+void GameOverState::EnterState()
+{
+	State::EnterState();
+
+
+
+}
+
+void GameOverState::ExitState()
+{
+	NewDrinkState = false;
+	NewPlantState = false;
+
+}
+
+
+void GameOverState::RunState()
+{
 	State::RunState();
 
+
+
+
+	if (pState[SDL_SCANCODE_SPACE]) {
+
+		NewGameState = true;
+
+	}
+	if (pState[SDL_SCANCODE_RETURN]) {
+
+
+		NewGameState = true;
+	}
 }

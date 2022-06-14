@@ -14,9 +14,11 @@ Plant::Plant()
 	mPlantSize = 0;
 	mFlowerSize = 0;
 	mFlowerMarginUp = 30;
+	mName = "";
+	mWaterd = false;
 }
 
-Plant::Plant(exVector2 position, exVector2 velocity, float stemSize, float flowerSize, float flowerMarginUp, std::string name) 
+Plant::Plant(exVector2 position, exVector2 velocity, float stemSize, float flowerSize, float flowerMarginUp, std::string name, bool waterd) 
 {
 	mPosition = position;
 	mVelocity = velocity;
@@ -24,6 +26,7 @@ Plant::Plant(exVector2 position, exVector2 velocity, float stemSize, float flowe
 	mFlowerSize = flowerSize;
 	mFlowerMarginUp = flowerMarginUp; 
 	mName = name;
+	mWaterd = waterd; 
 }
 
 //Overriden from the Ball class.
@@ -38,11 +41,23 @@ void Plant::Initialize()
 	AddComponent(new CircleComponent(this, mFlowerSize)); 
 	//Added a Circle COmponent to our Circle;
 	
-     
+	AddComponent(new PhysicsComponent(this, false, 0, 1, { 25,25 }));  
 	AddComponent(new Transform(this, mPosition));
-
+	
 	GameObject::Initialize();
 }
+
+void Plant::Uninitialize()
+{
+	GameObjectManager::GetInstance()->UnregisterGameObject(this); 
+	RemoveComponents(); 
+	mWaterd = false;
+	mFlowerSize = 0;  
+}
+
+
+
+
 void Plant::Destroy()
 {
 	GameObjectManager::GetInstance()->UnregisterGameObject(this);
@@ -55,6 +70,7 @@ exVector2 Plant::getPosition()
 //Collision Event Litsner
 void Plant::OnCollision(PhysicsComponent* pCurrentComponent, PhysicsComponent* pOtherComponent)
 {
+	Uninitialize(); 
 	//Update Position
 	// Play Particle
 	//TODO something
@@ -62,7 +78,7 @@ void Plant::OnCollision(PhysicsComponent* pCurrentComponent, PhysicsComponent* p
 
 bool Plant::CheckIfMaxSize()
 {
-	if (mFlowerSize >= 25) {
+	if (mFlowerSize >= 1) { 
 		return true;
 	}
 	return false; 

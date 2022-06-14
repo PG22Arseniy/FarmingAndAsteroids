@@ -13,9 +13,10 @@ class Plant : public GameObject, public IPhysicsCollisionEvent
 public:
 
 	Plant();
-	Plant(exVector2 position, exVector2 velocity, float stemSize, float flowerSize, float flowerMarginUp = 30, std::string name = "default"); 
+	Plant(exVector2 position, exVector2 velocity, float stemSize, float flowerSize, float flowerMarginUp = 30, std::string name = "default", bool watered = false); 
 
 	virtual void Initialize()override;
+	void Uninitialize();
 	void Destroy();  
 
 	exVector2 getPosition(); 
@@ -27,6 +28,7 @@ public:
 	std::string mName;
 
 	bool CheckIfMaxSize ();
+	bool mWaterd; 
 
 	GameObjectHandle* CurrentObjectHandle; 
 

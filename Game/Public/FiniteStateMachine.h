@@ -21,16 +21,18 @@ private:
 	WaterPlantState* mWaterPlantState; 
 	CreateDrinkState* mCreateDrinkState; 
 	PlantGrowthState* mPlantGrowthState;
+	GameOverState* mGameOverState;
 
 	State* mCurrentState;
 
 	int TotalMoney = 0;
 
+	bool reset = false;
 
-	const int Select_DURATION = 100;   
+	const int Select_DURATION = 160;   
 	const int CreateDrink_DURATION = 160;   
 	const int WaterDrink_DURATION = 160;    
-	const int PlantGrowth_DURATION = 260;  
+	const int PlantGrowth_DURATION = 160;     
 
 };
 

@@ -18,6 +18,8 @@ public:
 	template<typename T>
 	T* FindComponent(ComponentTypes eType);
 
+	void RemoveComponents(); 
+
 	exColor mColor;
 
 private:

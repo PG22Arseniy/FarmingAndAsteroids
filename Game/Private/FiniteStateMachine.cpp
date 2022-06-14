@@ -27,6 +27,7 @@ FiniteStateMachine::FiniteStateMachine(StateDefinations StartingState)
 	mCreateDrinkState = new CreateDrinkState(nullptr, plants);
 	mWaterPlantState = new WaterPlantState(nullptr, plants);
 	mPlantGrowthState = new PlantGrowthState(nullptr, plants);
+	mGameOverState = new GameOverState(nullptr, plants);
 
 	switch (StartingState)
 	{
@@ -45,6 +46,9 @@ FiniteStateMachine::FiniteStateMachine(StateDefinations StartingState)
 	case StateDefinations::PlantGrowth:
 		mCurrentState = mPlantGrowthState;
 		break;
+	case StateDefinations::GameOver:
+		mCurrentState = mGameOverState;
+		break;
 	default:
 		mCurrentState = mSelectState;
 		break;
@@ -61,6 +65,7 @@ FiniteStateMachine::~FiniteStateMachine()
 	delete mCreateDrinkState;
 	delete mPlantGrowthState;
 	delete mSelectState;
+	delete mGameOverState;
 }
 
 void FiniteStateMachine::RunStateMachine(exEngineInterface* engine)
@@ -73,6 +78,9 @@ void FiniteStateMachine::RunStateMachine(exEngineInterface* engine)
 	c.mColor[3] = 255;
 	int mFontID = engine->LoadFont("Build/afternight.ttf", 30);
 	engine->DrawText(mFontID, exVector2{ 250 ,50 }, "Farming And Asteroids", c, 0);     
+	 
+	if (reset) engine->DrawText(mFontID, exVector2{ 250 ,350 }, "Press enter to continue", c, 0);
+
 	Drink * drink = new Drink({ 650 ,100 }, { 0, 0 }, 50, 0);  
 	drink->Initialize();
 
@@ -89,13 +97,16 @@ void FiniteStateMachine::RunStateMachine(exEngineInterface* engine)
 			//Exit Condition
 			if (CurrentSelectState->NewDrinkState)  
 			{
+				reset = false;
 				mCurrentState->ExitState(); 
 				mCurrentState = mCreateDrinkState;
+
 				mCurrentState->EnterState();
 				break;
 			}
 			if (CurrentSelectState->NewPlantState)
 			{
+				reset = false;
 				mCurrentState->ExitState();
 				mCurrentState = mCreatePlantState; 
 				mCurrentState->EnterState(); 
@@ -105,6 +116,8 @@ void FiniteStateMachine::RunStateMachine(exEngineInterface* engine)
 		break;
 	case StateDefinations::CreatePlant:
 		mCurrentState->RunState();
+
+		
 
 		if (CreatePlantState* CurrentCreatePlantState = dynamic_cast<CreatePlantState*>(mCurrentState))
 		{
@@ -139,6 +152,16 @@ void FiniteStateMachine::RunStateMachine(exEngineInterface* engine)
 		if (PlantGrowthState* CurrentPlantGrowthState = dynamic_cast<PlantGrowthState*>(mCurrentState))
 		{
 			//Exit Condition
+
+			if (CurrentPlantGrowthState->gameover)
+			{
+				mCurrentState->ExitState();
+				mCurrentState = mGameOverState; 
+				mCurrentState->EnterState();
+
+				break;
+			}
+
 			if (CurrentPlantGrowthState->counter >= PlantGrowth_DURATION) 
 			{
 				mCurrentState->ExitState();
@@ -157,8 +180,24 @@ void FiniteStateMachine::RunStateMachine(exEngineInterface* engine)
 			if (CurrentCreateDrinkState->counter >= CreateDrink_DURATION)
 			{
 				mCurrentState->ExitState();
-				mCurrentState = mWaterPlantState;
+				mCurrentState = mWaterPlantState; 
 				mCurrentState->EnterState();  
+				break;
+			}
+		}
+		break;
+	case StateDefinations::GameOver:
+		mCurrentState->RunState();
+		if (GameOverState* CurrentGameOverState = dynamic_cast<GameOverState*>(mCurrentState))
+		{
+			reset = true; 
+			//Exit Condition
+			if (CurrentGameOverState->NewGameState)
+			{
+				mCurrentState->ExitState();
+				mCurrentState = mSelectState;
+				mCurrentState->EnterState();
+			
 				break;
 			}
 		}
