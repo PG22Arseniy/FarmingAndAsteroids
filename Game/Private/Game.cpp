@@ -67,6 +67,11 @@ void MyGame::Initialize( exEngineInterface* pEngine )
 	
 	bullet = new Bullet({ 500 ,500 }, { 0, 0 }, 5); 
 	bullet->Initialize();
+
+	asteroid = new Asteroid({ 500, 500 }, { 0, 0 }, 5);
+	asteroid->Initialize();
+
+
 	exVector2 ballPos;
 	ballPos.x = 300; 
 	ballPos.y = 200;
