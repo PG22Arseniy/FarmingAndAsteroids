@@ -1,8 +1,11 @@
 #pragma once
 #include "State.h"
+#include "Coin.h"
 #include "Engine/Public/EngineInterface.h"
 #include "Engine/Public/SDL.h" 
-
+#include "GameObject.h"
+#include "Particle.h" 
+#include "ParticleSystem.h"  
 class FiniteStateMachine
 {
 
@@ -34,5 +37,6 @@ private:
 	const int WaterDrink_DURATION = 160;    
 	const int PlantGrowth_DURATION = 160;     
 
+	Coin* coin; 
 };
 

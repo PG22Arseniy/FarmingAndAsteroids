@@ -33,9 +33,7 @@ void CircleComponent::Render(exEngineInterface* engine, int layer) {
 	{
 		margin = plant->mFlowerMarginUp;
 		mRadius = plant->mFlowerSize; 
-	}
-	if (!(mOwningGameObject->mColor.mColor[0] == 0 && mOwningGameObject->mColor.mColor[1] == 0 && mOwningGameObject->mColor.mColor[2] == 0 && mOwningGameObject->mColor.mColor[3] == 0))
-		mShapeColor = mOwningGameObject->mColor; 
+	} 
 	
 	engine->DrawCircle({ position.x, position.y - margin}, mRadius, mShapeColor, layer);   
 }  

@@ -3,6 +3,8 @@
 #include "Game/Public/Transform.h"
 #include "Game/Public/CircleComponent.h"
 #include "Game/Public/PhysicsComponent.h"
+#include "Game/Public/TextComponent.h"
+#include "Game/Public/ParticleSystem.h" 
 
 
 GameObject::GameObject()
@@ -66,3 +68,5 @@ template Transform* GameObject::FindComponent<Transform>(ComponentTypes eType);
 template CircleComponent* GameObject::FindComponent<CircleComponent>(ComponentTypes eType);
 template PhysicsComponent* GameObject::FindComponent<PhysicsComponent>(ComponentTypes eType);
 template BoxComponent* GameObject::FindComponent<BoxComponent>(ComponentTypes eType);
+template TextComponent* GameObject::FindComponent<TextComponent>(ComponentTypes eType);
+template ParticleSystem* GameObject::FindComponent<ParticleSystem>(ComponentTypes eType);

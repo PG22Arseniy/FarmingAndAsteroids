@@ -15,6 +15,7 @@
 
 #include "Game/Public/CircleComponent.h"
 #include "Game/Public/BoxComponent.h"
+#include "Game/Public/TextComponent.h"
 #include "Game/Public/GameObject.h"
 #include "Game/Public/Ball.h"
 #include "Game/Public/Asteroid.h" 
@@ -136,7 +137,7 @@ void MyGame::Run( float fDeltaT )
 	StateMachine->RunStateMachine(mEngine);  
 	
 
-
+	
 }
 
 
@@ -163,6 +164,10 @@ void MyGame::Render()
 	for (CircleComponent* circle : CircleComponent::AllCircleComponents) {
 		circle->Render(mEngine, 1); 
 	}
+
+	for (TextComponent* text : TextComponent::AllTextComponents) {
+		text->Render(mEngine, 1);
+	}
 }
 
 void MyGame::Physics(float fDeltaT)
@@ -170,6 +175,9 @@ void MyGame::Physics(float fDeltaT)
 	// Updating all objects with physics component every frame
 	for (PhysicsComponent* phComp : PhysicsComponent::mAllPhysicsComponents) {
 		phComp->Update(fDeltaT);
+
+		 
+
 	}
 }
 

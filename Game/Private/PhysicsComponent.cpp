@@ -1,6 +1,7 @@
 #include "Game/Public/PhysicsComponent.h"
 #include "Game/Public/Transform.h"
 #include "Game/Public/GameObject.h"
+#include "Game/Public/Particle.h"
 #include "Game/Public/BoxComponent.h"
 #include "Game/Public/CircleComponent.h"
 #include "Game/Public/IPhysicsCollisionEvent.h" 
@@ -47,6 +48,7 @@ ComponentTypes PhysicsComponent::GetType()
 
 bool PhysicsComponent::IsColliding(const PhysicsComponent* OtherPhysicsComponent)const 
 {
+	if (!bIsCollisionEnabled || !OtherPhysicsComponent->bIsCollisionEnabled) return false;  
 
 	BoxComponent* MyBoxComp = mOwningGameObject->FindComponent<BoxComponent>(ComponentTypes::Box);
 	CircleComponent* MyCircleComp = mOwningGameObject->FindComponent<CircleComponent>(ComponentTypes::Circle);
@@ -63,7 +65,7 @@ bool PhysicsComponent::IsColliding(const PhysicsComponent* OtherPhysicsComponent
 	float distX = abs(x1 - y2);
 	float distY = abs(y1 - y2);
 
-
+	
 
 	if (MyCircleComp !=  nullptr && OtherCircleComp !=  nullptr)
 	{
@@ -144,6 +146,23 @@ bool PhysicsComponent::IsColliding(const PhysicsComponent* OtherPhysicsComponent
 
 void PhysicsComponent::Update(float pDeltaTime)
 {
+
+	if (Particle* particle = dynamic_cast<Particle*>(mOwningGameObject)) {
+		if (particle->mLifeTime >= 0.0f)
+		{
+			particle->mLifeTime -= pDeltaTime;
+
+			if (particle->mLifeTime <= 0.0f) 
+			{
+				particle->RemoveComponents(); 
+				particle = nullptr; 
+				delete particle; 
+			
+				 
+				return;  
+			}
+		}
+	}
 
 	mTransform->mPosition.x = mTransform->mPosition.x + mVelocity.x * pDeltaTime;
 	mTransform->mPosition.y = mTransform->mPosition.y + mVelocity.y * pDeltaTime;

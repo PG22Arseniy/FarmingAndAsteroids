@@ -1,4 +1,13 @@
 #include "Game/Public/FiniteStateMachine.h"
+#include "Game/Public/Box.h"
+#include "Game/Public/BoxComponent.h"
+#include "Game/Public/CircleComponent.h"
+#include "Game/Public/TextComponent.h"
+#include "Game/Public/PhysicsComponent.h" 
+#include "Game/Public/Transform.h"
+#include "Game/Public/GameObject.h"
+#include "Game/Public/Particle.h" 
+#include "Game/Public/ParticleSystem.h"
 #include <stdlib.h>
 #include <time.h>
 #include <vector>
@@ -20,7 +29,12 @@ FiniteStateMachine::FiniteStateMachine(StateDefinations StartingState)
 	std::vector<Plant*> plants = {plant1,plant2,plant3, plant4};
 
 	
+	// Plant's drink on the top right side
+	Drink* drink = new Drink({ 650 ,100 }, { 0, 0 }, 50, 0);
+	drink->Initialize();
 
+	coin = new Coin({ 200, 450 }, { 0,-10 }, 5, 3); 
+	coin->Initialize(); 
 
 	mSelectState = new SelectState(nullptr, plants);
 	mCreatePlantState = new CreatePlantState(nullptr, plants);
@@ -76,13 +90,18 @@ void FiniteStateMachine::RunStateMachine(exEngineInterface* engine)
 	c.mColor[1] = 255;
 	c.mColor[2] = 0;
 	c.mColor[3] = 255;
+
+	// get font
 	int mFontID = engine->LoadFont("Build/afternight.ttf", 30);
+
+	// name of the game
 	engine->DrawText(mFontID, exVector2{ 250 ,50 }, "Farming And Asteroids", c, 0);     
 	 
+
+	// game over text
 	if (reset) engine->DrawText(mFontID, exVector2{ 250 ,350 }, "Press enter to continue", c, 0);
 
-	Drink * drink = new Drink({ 650 ,100 }, { 0, 0 }, 50, 0);  
-	drink->Initialize();
+
 
 	if (!mCurrentState) return;
 
@@ -96,7 +115,9 @@ void FiniteStateMachine::RunStateMachine(exEngineInterface* engine)
 		{
 			//Exit Condition
 			if (CurrentSelectState->NewDrinkState)  
-			{
+			{	
+
+				coin->FindComponent<ParticleSystem>(ComponentTypes::ParticleSystem)->Play(); 
 				reset = false;
 				mCurrentState->ExitState(); 
 				mCurrentState = mCreateDrinkState;
@@ -124,6 +145,7 @@ void FiniteStateMachine::RunStateMachine(exEngineInterface* engine)
 			//Exit Condition
 			if (CurrentCreatePlantState->counter >= CreateDrink_DURATION)
 			{
+				
 				mCurrentState->ExitState();
 				mCurrentState = mSelectState; 
 				mCurrentState->EnterState();
@@ -179,6 +201,7 @@ void FiniteStateMachine::RunStateMachine(exEngineInterface* engine)
 			//Exit Condition
 			if (CurrentCreateDrinkState->counter >= CreateDrink_DURATION)
 			{
+				coin->FindComponent<ParticleSystem>(ComponentTypes::ParticleSystem)->Destroy(); 
 				mCurrentState->ExitState();
 				mCurrentState = mWaterPlantState; 
 				mCurrentState->EnterState();  

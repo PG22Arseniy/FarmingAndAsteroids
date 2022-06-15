@@ -23,7 +23,7 @@ Bullet::Bullet(exVector2 position, exVector2 velocity, float size)
 void Bullet::Initialize()
 {
 	//Added a Circle COmponent to our Circle;
-	AddComponent(new CircleComponent(this, mSize * 5, {200,200,0,200})); 
+	AddComponent(new CircleComponent(this, mSize * 5, {100,100,200,200}));  
 	AddComponent(new PhysicsComponent(this, true, 0.5f, 5.0f, mVelocity));
 	AddComponent(new Transform(this, mPosition));
 

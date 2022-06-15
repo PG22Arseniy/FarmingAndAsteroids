@@ -7,6 +7,8 @@ enum class ComponentTypes
 	Physics,
 	Box,
 	Circle,
+	Text,
+	ParticleSystem
 };
 
 class GameObject;

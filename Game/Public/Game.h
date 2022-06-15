@@ -40,7 +40,7 @@ public:
 
 	void Render();
 	void Physics(float fDeltaT); 
-	void Input();  
+	void Input();   
 
 private:
 
