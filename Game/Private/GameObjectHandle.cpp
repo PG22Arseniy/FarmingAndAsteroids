@@ -1,7 +1,7 @@
-#include "GameObjectHandle.h"
-#include "GameObject.h"
-#include "GameObjectManager.h"
-#include "Plant.h"
+#include "Game/Public/GameObjectHandle.h"
+#include "Game/Public/GameObject.h"
+#include "Game/Public/GameObjectManager.h"
+#include "Game/Public/Plant.h"
 
 #include "string"
 
