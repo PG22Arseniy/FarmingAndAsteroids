@@ -17,8 +17,8 @@ Particle::Particle()
 	mLifeTime = 0;
 }
 
-Particle::Particle(exVector2 position, exVector2 velocity, float size, float lifetime)
-{
+Particle::Particle(exVector2 position, exVector2 velocity, float size, float lifetime)  
+{ 
 	mPosition = position;
 	mVelocity = velocity;
 	mSize = size;
@@ -28,6 +28,7 @@ Particle::Particle(exVector2 position, exVector2 velocity, float size, float lif
 //Overriden from the Ball class.
 void Particle::Initialize()
 {
+	
 	//Added a Circle COmponent to our Circle;
 	AddComponent(new CircleComponent(this, mSize, {180,90,250,250}));    
 	AddComponent(new Transform(this, mPosition));
@@ -38,7 +39,8 @@ void Particle::Initialize()
 }
 
 void Particle::Destroy() {
-	GameObject::~GameObject(); 
+	GameObject::~GameObject();  
+	
 }
 
 void Particle::OnCollision(PhysicsComponent* pCurrentComponent, PhysicsComponent* pOtherComponent)

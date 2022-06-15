@@ -48,6 +48,17 @@ void GameObject::RemoveComponents()
 	mComponents.clear(); 
 }
 
+bool GameObject::Dead()
+{
+	if (mComponents.size() < 1) {
+		return true;
+	}
+	return false; 
+}
+
+void GameObject::Destroy() {
+	GameObject::~GameObject(); 
+}
 
 template<typename T>
 T* GameObject::FindComponent(ComponentTypes eType)

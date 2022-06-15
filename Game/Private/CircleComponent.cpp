@@ -26,6 +26,8 @@ ComponentTypes CircleComponent::GetType()
 	return ComponentTypes::Circle;
 }
 void CircleComponent::Render(exEngineInterface* engine, int layer) {
+
+ 
 	exVector2 position = mOwningGameObject->FindComponent<Transform>(ComponentTypes::Transform)->mPosition;
 	//color = mOwningGameObject->mColor; 
 	float margin = 0;

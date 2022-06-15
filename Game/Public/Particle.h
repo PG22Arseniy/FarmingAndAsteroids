@@ -14,8 +14,9 @@ public:
 	virtual void Initialize()override;
 	virtual void OnCollision(PhysicsComponent* pCurrentComponent, PhysicsComponent* pOtherComponent);
 	float mLifeTime; 
+	exVector2 mPosition; 
 private:
-	exVector2 mPosition;
+
 	exVector2 mVelocity;
 	float mSize;
 

@@ -147,23 +147,6 @@ bool PhysicsComponent::IsColliding(const PhysicsComponent* OtherPhysicsComponent
 void PhysicsComponent::Update(float pDeltaTime)
 {
 
-	if (Particle* particle = dynamic_cast<Particle*>(mOwningGameObject)) {
-		if (particle->mLifeTime >= 0.0f)
-		{
-			particle->mLifeTime -= pDeltaTime;
-
-			if (particle->mLifeTime <= 0.0f) 
-			{
-				particle->RemoveComponents(); 
-				particle = nullptr; 
-				delete particle; 
-			
-				 
-				return;  
-			}
-		}
-	}
-
 	mTransform->mPosition.x = mTransform->mPosition.x + mVelocity.x * pDeltaTime;
 	mTransform->mPosition.y = mTransform->mPosition.y + mVelocity.y * pDeltaTime;
 

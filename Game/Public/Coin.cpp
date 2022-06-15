@@ -33,12 +33,16 @@ void Coin::Initialize()
 	AddComponent(new PhysicsComponent(this, true, 0.5f, 5.0f, mVelocity));
 	AddComponent(new Transform(this, mPosition));
 	AddComponent(new TextComponent(this, std::to_string(mValue), { 200,0,240,250 })); 
-	AddComponent(new ParticleSystem(this,mPosition, mValue, { 200,0,240,250 })); 
+	AddComponent(new ParticleSystem(this,mPosition, mValue, { 200,0,240,250 }, 0.2));   
 
 	GameObject::Initialize();
+
+	
 }
 
 void Coin::Destroy() {
+
+	
 	GameObject::~GameObject(); 
 }
 //Collision Event Litsner
@@ -47,4 +51,21 @@ void Coin::OnCollision(PhysicsComponent* pCurrentComponent, PhysicsComponent* pO
 	//Update Position
 	// Play Particle
 	//TODO something
+}
+
+void Coin::InputCheck(float deltaT) {
+
+	if (pState[SDL_SCANCODE_TAB]) {
+
+		FindComponent<ParticleSystem>(ComponentTypes::ParticleSystem)->Play();
+	
+	}
+
+	if (FindComponent<ParticleSystem>(ComponentTypes::ParticleSystem)->On) {
+		FindComponent<ParticleSystem>(ComponentTypes::ParticleSystem)->Update(deltaT); 
+	}
+
+	if (FindComponent<ParticleSystem>(ComponentTypes::ParticleSystem)->mLifeTime <= 0.0f)  
+		Destroy(); 
+	
 }

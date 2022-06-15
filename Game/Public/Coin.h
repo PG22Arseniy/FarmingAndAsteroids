@@ -14,6 +14,10 @@ public:
 	virtual void Initialize()override;
 	void Destroy();
 	virtual void OnCollision(PhysicsComponent* pCurrentComponent, PhysicsComponent* pOtherComponent);
+	void InputCheck(float delatT);
+
+	int nKeys = 0;
+	const Uint8* pState = SDL_GetKeyboardState(&nKeys);
 
 private:
 	exVector2 mPosition;

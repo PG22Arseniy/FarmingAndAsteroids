@@ -13,7 +13,7 @@
 #include <thread>
 std::vector<Particle*> ParticleSystem::AllParticles;
 
-ParticleSystem::ParticleSystem(GameObject* Owner, exVector2 position, int value, exColor color):Component(Owner),mPosition(position), mValue(value), mParticleColor(color)
+ParticleSystem::ParticleSystem(GameObject* Owner, exVector2 position, int value, exColor color, float lifetime):Component(Owner),mPosition(position), mValue(value), mParticleColor(color), mLifeTime(lifetime)
 {
 
 }
@@ -21,40 +21,41 @@ ParticleSystem::ParticleSystem(GameObject* Owner, exVector2 position, int value,
 //Overriden from the Ball class.
 void ParticleSystem::Initialize()
 {
-	
+	Particle* particle = new Particle({ mPosition.x , mPosition.y }, { -100,100 }, 5);
+	ParticleSystem::AllParticles.push_back(particle);
+
+	particle = new Particle({ mPosition.x , mPosition.y }, { -50,0 }, 5);
+	ParticleSystem::AllParticles.push_back(particle);
+
+	particle = new Particle({ mPosition.x , mPosition.y }, { -50,-50 }, 5);
+	ParticleSystem::AllParticles.push_back(particle);
+
+	particle = new Particle({ mPosition.x , mPosition.y }, { 0,-50 }, 5);
+	ParticleSystem::AllParticles.push_back(particle);
+
+	particle = new Particle({ mPosition.x , mPosition.y }, { 50,-50 }, 5);
+	ParticleSystem::AllParticles.push_back(particle);
+
+	particle = new Particle({ mPosition.x , mPosition.y }, { 50,0 }, 5);
+	ParticleSystem::AllParticles.push_back(particle);
+
+	particle = new Particle({ mPosition.x , mPosition.y }, { 50,50 }, 5); 
+	ParticleSystem::AllParticles.push_back(particle);
+
+	particle = new Particle({ mPosition.x , mPosition.y }, { 0,50 }, 5);
+	ParticleSystem::AllParticles.push_back(particle);
 	
 }
 void ParticleSystem:: Play() { 
 
 	//mPosition = Owner->FindComponent<Transform>(ComponentTypes::Transform).
-	mPosition =  this->mOwningGameObject->FindComponent<Transform>(ComponentTypes::Transform)->mPosition; 
+	// mPosition =  this->mOwningGameObject->FindComponent<Transform>(ComponentTypes::Transform)->mPosition; 
 
-	Particle* particle = new Particle({ mPosition.x , mPosition.y }, { -100,100 }, 5);
-	ParticleSystem::AllParticles.push_back(particle);
-
-	particle = new Particle({ mPosition.x , mPosition.y }, { -100,0 }, 5);
-	ParticleSystem::AllParticles.push_back(particle);
-
-	particle = new Particle({ mPosition.x , mPosition.y }, { -100,-100 }, 5);
-	ParticleSystem::AllParticles.push_back(particle);
-
-	particle = new Particle({ mPosition.x , mPosition.y }, { 0,-100 }, 5);
-	ParticleSystem::AllParticles.push_back(particle);
-
-	particle = new Particle({ mPosition.x , mPosition.y }, { 100,-100 }, 5);
-	ParticleSystem::AllParticles.push_back(particle);
-
-	particle = new Particle({ mPosition.x , mPosition.y }, { 100,0 }, 5);
-	ParticleSystem::AllParticles.push_back(particle);
-
-	particle = new Particle({ mPosition.x , mPosition.y }, { 100,100 }, 5);
-	ParticleSystem::AllParticles.push_back(particle);
-
-	particle = new Particle({ mPosition.x , mPosition.y }, { 0,100 }, 5);
-	ParticleSystem::AllParticles.push_back(particle);
-
+	 
+	On = true;
 	for (Particle* particle : ParticleSystem::AllParticles)
 	{
+		particle->mPosition = this->mOwningGameObject->FindComponent<Transform>(ComponentTypes::Transform)->mPosition;
 		particle->Initialize();
 	}
 	/*std::thread SleepAndKillThread(&ParticleSystem::SleepAndKill, this);
@@ -70,11 +71,25 @@ ComponentTypes ParticleSystem::GetType()
 void ParticleSystem:: Destroy() {
 	for (Particle* particle: ParticleSystem::AllParticles)
 	{
-		delete particle;
+		particle->Destroy();
 	}
 	ParticleSystem::AllParticles.clear();  
+	
 } 
+void ParticleSystem::Update(float deltaT) {
 
+	if (!On) return;
+		if (mLifeTime >= 0.0f)
+		{
+			mLifeTime -= deltaT;
+
+			if (mLifeTime <= 0.0f)
+			{
+				Destroy();
+				return;
+			}
+		} 
+}
 //void ParticleSystem::SleepAndKill() { 
 //	std::this_thread::sleep_for(std::chrono::milliseconds(3000));  
 //	//Destroy();  

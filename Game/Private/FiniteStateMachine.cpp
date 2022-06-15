@@ -82,9 +82,12 @@ FiniteStateMachine::~FiniteStateMachine()
 	delete mGameOverState;
 }
 
-void FiniteStateMachine::RunStateMachine(exEngineInterface* engine)
+void FiniteStateMachine::RunStateMachine(exEngineInterface* engine, float fDealtT)
 {
 
+	if (!coin->Dead())
+	coin->InputCheck(fDealtT);  
+	 
 	exColor c;
 	c.mColor[0] = 25;
 	c.mColor[1] = 255;
@@ -116,8 +119,6 @@ void FiniteStateMachine::RunStateMachine(exEngineInterface* engine)
 			//Exit Condition
 			if (CurrentSelectState->NewDrinkState)  
 			{	
-
-				coin->FindComponent<ParticleSystem>(ComponentTypes::ParticleSystem)->Play(); 
 				reset = false;
 				mCurrentState->ExitState(); 
 				mCurrentState = mCreateDrinkState;

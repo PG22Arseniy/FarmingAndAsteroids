@@ -15,7 +15,7 @@ public:
 	~FiniteStateMachine();
 
 
-	void RunStateMachine(exEngineInterface* engine);
+	void RunStateMachine(exEngineInterface* engine, float fDealtT);
 
 private:
 

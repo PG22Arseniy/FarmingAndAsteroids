@@ -134,7 +134,7 @@ void MyGame::Run( float fDeltaT )
 	InputThread.join(); 
 	PhysicsThread.join();  
 	RenderThread.join(); 
-	StateMachine->RunStateMachine(mEngine);  
+	StateMachine->RunStateMachine(mEngine, fDeltaT);   
 	
 
 	
