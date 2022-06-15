@@ -22,6 +22,9 @@ public:
 
 	exColor mColor;
 
+	void Destroy(); 
+	bool Dead();
+
 private:
 
 	std::vector<Component*> mComponents;

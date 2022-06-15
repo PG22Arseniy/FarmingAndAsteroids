@@ -152,6 +152,7 @@
     <ClInclude Include="Game\Public\BoxComponent.h" />
     <ClInclude Include="Game\Public\Bullet.h" />
     <ClInclude Include="Game\Public\CircleComponent.h" />
+    <ClInclude Include="Game\Public\Coin.h" />
     <ClInclude Include="Game\Public\Component.h" />
     <ClInclude Include="Game\Public\Drink.h" />
     <ClInclude Include="Game\Public\FiniteStateMachine.h" />
@@ -160,12 +161,18 @@
     <ClInclude Include="Game\Public\GameObjectHandle.h" />
     <ClInclude Include="Game\Public\GameObjectManager.h" />
     <ClInclude Include="Game\Public\IPhysicsCollisionEvent.h" />
+    <ClInclude Include="Game\Public\Particle.h" />
+    <ClInclude Include="Game\Public\ParticleSystem.h" />
     <ClInclude Include="Game\Public\PhysicsComponent.h" />
     <ClInclude Include="Game\Public\Plant.h" />
     <ClInclude Include="Game\Public\ShapeComponent.h" />
     <ClInclude Include="Game\Public\Ship.h" />
     <ClInclude Include="Game\Public\Square.h" />
     <ClInclude Include="Game\Public\State.h" />
+<<<<<<< HEAD
+=======
+    <ClInclude Include="Game\Public\TextComponent.h" />
+>>>>>>> de1f366786b2e36ebfbc2f891cc4f0f8c39b1f14
     <ClInclude Include="Game\Public\TrafficLight.h" />
     <ClInclude Include="Game\Public\Transform.h" />
     <ClInclude Include="Utils.h" />
@@ -182,14 +189,24 @@
     <ClCompile Include="Game\Private\PhysicsComponent.cpp" />
     <ClCompile Include="Game\Private\ShapeComponent.cpp" />
     <ClCompile Include="Game\Private\State.cpp" />
+<<<<<<< HEAD
+=======
+    <ClCompile Include="Game\Private\TextComponent.cpp" />
+>>>>>>> de1f366786b2e36ebfbc2f891cc4f0f8c39b1f14
     <ClCompile Include="Game\Private\Transform.cpp" />
     <ClCompile Include="Game\Public\Asteroid.cpp" />
     <ClCompile Include="Game\Public\Box.cpp" />
     <ClCompile Include="Game\Public\Bullet.cpp" />
+    <ClCompile Include="Game\Public\Coin.cpp" />
     <ClCompile Include="Game\Public\Drink.cpp" />
     <ClCompile Include="Game\Public\GameObjectHandle.cpp" />
     <ClCompile Include="Game\Public\GameObjectManager.cpp" />
     <ClCompile Include="Game\Public\IPhysicsCollisionEvent.cpp" />
+<<<<<<< HEAD
+=======
+    <ClCompile Include="Game\Public\Particle.cpp" />
+    <ClCompile Include="Game\Public\ParticleSystem.cpp" />
+>>>>>>> de1f366786b2e36ebfbc2f891cc4f0f8c39b1f14
     <ClCompile Include="Game\Public\Plant.cpp" />
     <ClCompile Include="Game\Public\Ship.cpp" />
     <ClCompile Include="Game\Public\Square.cpp" />

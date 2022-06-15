@@ -100,6 +100,21 @@
     <ClInclude Include="Game\Public\GameObjectManager.h">
       <Filter>Source Files\Game\Public</Filter>
     </ClInclude>
+<<<<<<< HEAD
+=======
+    <ClInclude Include="Game\Public\Coin.h">
+      <Filter>Source Files\Game\Public</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\Public\TextComponent.h">
+      <Filter>Source Files\Game\Public</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\Public\Particle.h">
+      <Filter>Source Files\Game\Public</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\Public\ParticleSystem.h">
+      <Filter>Source Files\Game\Public</Filter>
+    </ClInclude>
+>>>>>>> de1f366786b2e36ebfbc2f891cc4f0f8c39b1f14
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Game\Private\Main.cpp">
@@ -171,5 +186,20 @@
     <ClCompile Include="Game\Public\GameObjectManager.cpp">
       <Filter>Source Files\Game\Private</Filter>
     </ClCompile>
+<<<<<<< HEAD
+=======
+    <ClCompile Include="Game\Public\Coin.cpp">
+      <Filter>Source Files\Game\Private</Filter>
+    </ClCompile>
+    <ClCompile Include="Game\Private\TextComponent.cpp">
+      <Filter>Source Files\Game\Private</Filter>
+    </ClCompile>
+    <ClCompile Include="Game\Public\Particle.cpp">
+      <Filter>Source Files\Game\Private</Filter>
+    </ClCompile>
+    <ClCompile Include="Game\Public\ParticleSystem.cpp">
+      <Filter>Source Files\Game\Private</Filter>
+    </ClCompile>
+>>>>>>> de1f366786b2e36ebfbc2f891cc4f0f8c39b1f14
   </ItemGroup>
 </Project>

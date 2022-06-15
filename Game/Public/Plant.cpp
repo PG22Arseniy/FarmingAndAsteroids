@@ -41,7 +41,11 @@ void Plant::Initialize()
 	AddComponent(new CircleComponent(this, mFlowerSize)); 
 	//Added a Circle COmponent to our Circle;
 	
+<<<<<<< HEAD
 	AddComponent(new PhysicsComponent(this, false, 0, 1, { 25,25 }));  
+=======
+	AddComponent(new PhysicsComponent(this, false, 0, 1, { 0,0 }));   
+>>>>>>> de1f366786b2e36ebfbc2f891cc4f0f8c39b1f14
 	AddComponent(new Transform(this, mPosition));
 	
 	GameObject::Initialize();

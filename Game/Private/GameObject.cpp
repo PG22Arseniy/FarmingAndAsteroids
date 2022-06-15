@@ -3,7 +3,8 @@
 #include "Game/Public/Transform.h"
 #include "Game/Public/CircleComponent.h"
 #include "Game/Public/PhysicsComponent.h"
-
+#include "Game/Public/TextComponent.h"
+#include "Game/Public/ParticleSystem.h" 
 
 GameObject::GameObject()
 {
@@ -38,6 +39,16 @@ void GameObject::AddComponent(Component* ComponentToAdd)
 }
 void GameObject::RemoveComponents()
 { 
+<<<<<<< HEAD
+
+	for (Component* comp : mComponents) {
+		comp->Destroy(); 
+	}
+
+	mComponents.clear(); 
+}
+=======
+>>>>>>> de1f366786b2e36ebfbc2f891cc4f0f8c39b1f14
 
 	for (Component* comp : mComponents) {
 		comp->Destroy(); 
@@ -46,6 +57,17 @@ void GameObject::RemoveComponents()
 	mComponents.clear(); 
 }
 
+bool GameObject::Dead()
+{
+	if (mComponents.size() < 1) {
+		return true;
+	}
+	return false; 
+}
+
+void GameObject::Destroy() {
+	GameObject::~GameObject(); 
+}
 
 template<typename T>
 T* GameObject::FindComponent(ComponentTypes eType)
@@ -66,3 +88,5 @@ template Transform* GameObject::FindComponent<Transform>(ComponentTypes eType);
 template CircleComponent* GameObject::FindComponent<CircleComponent>(ComponentTypes eType);
 template PhysicsComponent* GameObject::FindComponent<PhysicsComponent>(ComponentTypes eType);
 template BoxComponent* GameObject::FindComponent<BoxComponent>(ComponentTypes eType);
+template TextComponent* GameObject::FindComponent<TextComponent>(ComponentTypes eType);
+template ParticleSystem* GameObject::FindComponent<ParticleSystem>(ComponentTypes eType);

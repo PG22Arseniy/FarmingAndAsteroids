@@ -15,6 +15,7 @@
 
 #include "Game/Public/CircleComponent.h"
 #include "Game/Public/BoxComponent.h"
+#include "Game/Public/TextComponent.h"
 #include "Game/Public/GameObject.h"
 #include "Game/Public/Ball.h"
 #include "Game/Public/Asteroid.h" 
@@ -67,11 +68,14 @@ void MyGame::Initialize( exEngineInterface* pEngine )
 	
 	bullet = new Bullet({ 500 ,500 }, { 0, 0 }, 5); 
 	bullet->Initialize();
+<<<<<<< HEAD
 
 	asteroid = new Asteroid({ 500, 500 }, { 0, 0 }, 5);
 	asteroid->Initialize();
 
 
+=======
+>>>>>>> de1f366786b2e36ebfbc2f891cc4f0f8c39b1f14
 	exVector2 ballPos;
 	ballPos.x = 300; 
 	ballPos.y = 200;
@@ -138,10 +142,17 @@ void MyGame::Run( float fDeltaT )
 	InputThread.join(); 
 	PhysicsThread.join();  
 	RenderThread.join(); 
+<<<<<<< HEAD
 	StateMachine->RunStateMachine(mEngine);  
 	
 
 
+=======
+	StateMachine->RunStateMachine(mEngine, fDeltaT);   
+	
+
+	
+>>>>>>> de1f366786b2e36ebfbc2f891cc4f0f8c39b1f14
 }
 
 
@@ -170,11 +181,25 @@ void MyGame::Render()
 	}
 }
 
+<<<<<<< HEAD
+=======
+	for (TextComponent* text : TextComponent::AllTextComponents) {
+		text->Render(mEngine, 1);
+	}
+}
+
+>>>>>>> de1f366786b2e36ebfbc2f891cc4f0f8c39b1f14
 void MyGame::Physics(float fDeltaT)
 {
 	// Updating all objects with physics component every frame
 	for (PhysicsComponent* phComp : PhysicsComponent::mAllPhysicsComponents) {
 		phComp->Update(fDeltaT);
+<<<<<<< HEAD
+=======
+
+		 
+
+>>>>>>> de1f366786b2e36ebfbc2f891cc4f0f8c39b1f14
 	}
 }
 

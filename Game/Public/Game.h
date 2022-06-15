@@ -40,7 +40,11 @@ public:
 
 	void Render();
 	void Physics(float fDeltaT); 
+<<<<<<< HEAD
 	void Input();  
+=======
+	void Input();   
+>>>>>>> de1f366786b2e36ebfbc2f891cc4f0f8c39b1f14
 
 private:
 

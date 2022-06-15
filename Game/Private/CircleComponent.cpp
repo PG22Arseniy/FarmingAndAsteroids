@@ -26,6 +26,11 @@ ComponentTypes CircleComponent::GetType()
 	return ComponentTypes::Circle;
 }
 void CircleComponent::Render(exEngineInterface* engine, int layer) {
+<<<<<<< HEAD
+=======
+
+ 
+>>>>>>> de1f366786b2e36ebfbc2f891cc4f0f8c39b1f14
 	exVector2 position = mOwningGameObject->FindComponent<Transform>(ComponentTypes::Transform)->mPosition;
 	//color = mOwningGameObject->mColor; 
 	float margin = 0;
@@ -33,9 +38,13 @@ void CircleComponent::Render(exEngineInterface* engine, int layer) {
 	{
 		margin = plant->mFlowerMarginUp;
 		mRadius = plant->mFlowerSize; 
+<<<<<<< HEAD
 	}
 	if (!(mOwningGameObject->mColor.mColor[0] == 0 && mOwningGameObject->mColor.mColor[1] == 0 && mOwningGameObject->mColor.mColor[2] == 0 && mOwningGameObject->mColor.mColor[3] == 0))
 		mShapeColor = mOwningGameObject->mColor; 
+=======
+	} 
+>>>>>>> de1f366786b2e36ebfbc2f891cc4f0f8c39b1f14
 	
 	engine->DrawCircle({ position.x, position.y - margin}, mRadius, mShapeColor, layer);   
 }  

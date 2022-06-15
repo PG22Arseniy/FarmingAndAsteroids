@@ -1,4 +1,13 @@
 #include "Game/Public/FiniteStateMachine.h"
+#include "Game/Public/Box.h"
+#include "Game/Public/BoxComponent.h"
+#include "Game/Public/CircleComponent.h"
+#include "Game/Public/TextComponent.h"
+#include "Game/Public/PhysicsComponent.h" 
+#include "Game/Public/Transform.h"
+#include "Game/Public/GameObject.h"
+#include "Game/Public/Particle.h" 
+#include "Game/Public/ParticleSystem.h"
 #include <stdlib.h>
 #include <time.h>
 #include <vector>
@@ -20,7 +29,16 @@ FiniteStateMachine::FiniteStateMachine(StateDefinations StartingState)
 	std::vector<Plant*> plants = {plant1,plant2,plant3, plant4};
 
 	
+<<<<<<< HEAD
 
+=======
+	// Plant's drink on the top right side
+	Drink* drink = new Drink({ 650 ,100 }, { 0, 0 }, 50, 0);
+	drink->Initialize();
+
+	coin = new Coin({ 200, 450 }, { 0,-10 }, 5, 1);    
+	coin->Initialize(); 
+>>>>>>> de1f366786b2e36ebfbc2f891cc4f0f8c39b1f14
 
 	mSelectState = new SelectState(nullptr, plants);
 	mCreatePlantState = new CreatePlantState(nullptr, plants);
@@ -68,9 +86,18 @@ FiniteStateMachine::~FiniteStateMachine()
 	delete mGameOverState;
 }
 
+<<<<<<< HEAD
 void FiniteStateMachine::RunStateMachine(exEngineInterface* engine)
 {
 
+=======
+void FiniteStateMachine::RunStateMachine(exEngineInterface* engine, float fDealtT)
+{
+
+	if (!coin->Dead())
+	coin->InputCheck(fDealtT);  
+	 
+>>>>>>> de1f366786b2e36ebfbc2f891cc4f0f8c39b1f14
 	exColor c;
 	c.mColor[0] = 25;
 	c.mColor[1] = 255;
@@ -81,9 +108,24 @@ void FiniteStateMachine::RunStateMachine(exEngineInterface* engine)
 	 
 	if (reset) engine->DrawText(mFontID, exVector2{ 250 ,350 }, "Press enter to continue", c, 0);
 
+<<<<<<< HEAD
 	Drink * drink = new Drink({ 650 ,100 }, { 0, 0 }, 50, 0);  
 	drink->Initialize();
 
+=======
+	// get font
+	int mFontID = engine->LoadFont("Build/afternight.ttf", 30);
+
+	// name of the game
+	engine->DrawText(mFontID, exVector2{ 250 ,50 }, "Farming And Asteroids", c, 0);     
+	 
+
+	// game over text
+	if (reset) engine->DrawText(mFontID, exVector2{ 250 ,350 }, "Press enter to continue", c, 0);
+
+
+
+>>>>>>> de1f366786b2e36ebfbc2f891cc4f0f8c39b1f14
 	if (!mCurrentState) return;
 
 	// ACTUAl STATE LOGIC
@@ -96,7 +138,11 @@ void FiniteStateMachine::RunStateMachine(exEngineInterface* engine)
 		{
 			//Exit Condition
 			if (CurrentSelectState->NewDrinkState)  
+<<<<<<< HEAD
 			{
+=======
+			{	
+>>>>>>> de1f366786b2e36ebfbc2f891cc4f0f8c39b1f14
 				reset = false;
 				mCurrentState->ExitState(); 
 				mCurrentState = mCreateDrinkState;
@@ -124,6 +170,10 @@ void FiniteStateMachine::RunStateMachine(exEngineInterface* engine)
 			//Exit Condition
 			if (CurrentCreatePlantState->counter >= CreateDrink_DURATION)
 			{
+<<<<<<< HEAD
+=======
+				
+>>>>>>> de1f366786b2e36ebfbc2f891cc4f0f8c39b1f14
 				mCurrentState->ExitState();
 				mCurrentState = mSelectState; 
 				mCurrentState->EnterState();
@@ -179,6 +229,10 @@ void FiniteStateMachine::RunStateMachine(exEngineInterface* engine)
 			//Exit Condition
 			if (CurrentCreateDrinkState->counter >= CreateDrink_DURATION)
 			{
+<<<<<<< HEAD
+=======
+				coin->FindComponent<ParticleSystem>(ComponentTypes::ParticleSystem)->Destroy(); 
+>>>>>>> de1f366786b2e36ebfbc2f891cc4f0f8c39b1f14
 				mCurrentState->ExitState();
 				mCurrentState = mWaterPlantState; 
 				mCurrentState->EnterState();  
