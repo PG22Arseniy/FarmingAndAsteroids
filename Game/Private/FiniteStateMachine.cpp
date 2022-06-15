@@ -35,7 +35,7 @@ FiniteStateMachine::FiniteStateMachine(StateDefinations StartingState)
 
 	coin = new Coin({ 200, 450 }, { 0,-10 }, 5, 1);    
 	coin->Initialize(); 
-
+	 
 	mSelectState = new SelectState(nullptr, plants);
 	mCreatePlantState = new CreatePlantState(nullptr, plants);
 	mCreateDrinkState = new CreateDrinkState(nullptr, plants);
