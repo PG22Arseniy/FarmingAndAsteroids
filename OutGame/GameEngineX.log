@@ -1,1 +1,3 @@
-﻿  GameEngineX.vcxproj -> C:\Users\pg22arseniy\Public\Repos\FarmingAndAsteroids\Build\GameEngineXd.exe
+﻿  FiniteStateMachine.cpp
+C:\Users\pg22arseniy\Public\Repos\FarmingAndAsteroids\Game\Private\FiniteStateMachine.cpp(70,12): warning C4244: 'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
+  GameEngineX.vcxproj -> C:\Users\pg22arseniy\Public\Repos\FarmingAndAsteroids\Build\GameEngineXd.exe

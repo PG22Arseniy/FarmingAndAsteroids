@@ -37,7 +37,38 @@ void Coin::Initialize()
 
 	GameObject::Initialize();
 
-	
+	switch (mValue)
+	{
+		case 1:
+			keyState = SDL_SCANCODE_1;
+			break;
+		case 2:
+			keyState = SDL_SCANCODE_2;
+			break;
+		case 3:
+			keyState = SDL_SCANCODE_3;
+			break;
+		case 4:
+			keyState = SDL_SCANCODE_4;
+			break;
+		case 5:
+			keyState = SDL_SCANCODE_5;
+			break;
+		case 6:
+			keyState = SDL_SCANCODE_6;
+			break;
+		case 7:
+			keyState = SDL_SCANCODE_7;
+			break;
+		case 8:
+			keyState = SDL_SCANCODE_8;
+			break;
+		case 9:
+			keyState = SDL_SCANCODE_9; 
+			break;
+		default:
+			break;
+	}
 }
 
 void Coin::Destroy() {
@@ -55,7 +86,7 @@ void Coin::OnCollision(PhysicsComponent* pCurrentComponent, PhysicsComponent* pO
 
 void Coin::InputCheck(float deltaT) {
 
-	if (pState[SDL_SCANCODE_TAB]) {
+	if (pState[keyState]) { 
 
 		FindComponent<ParticleSystem>(ComponentTypes::ParticleSystem)->Play();
 	

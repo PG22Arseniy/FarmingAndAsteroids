@@ -24,4 +24,5 @@ private:
 	exVector2 mVelocity;
 	float mSize;
 	int mValue; 
+	int keyState; 
 };

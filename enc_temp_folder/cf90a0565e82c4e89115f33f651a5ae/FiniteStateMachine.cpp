@@ -33,7 +33,7 @@ FiniteStateMachine::FiniteStateMachine(StateDefinations StartingState)
 	Drink* drink = new Drink({ 650 ,100 }, { 0, 0 }, 50, 0);
 	drink->Initialize();
 
-	coin = new Coin({ 200, 450 }, { 0,-10 }, 5, 1);    
+	coin = new Coin({ 200, 450 }, { 0,-10 }, 5, 1);   
 	coin->Initialize(); 
 
 	mSelectState = new SelectState(nullptr, plants);
