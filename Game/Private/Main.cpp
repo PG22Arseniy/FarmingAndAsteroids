@@ -6,10 +6,10 @@
 // entry point
 //
 
-#include "Game/Public/Game.h"
+#include "Game/Private/Game.h"
 #include "Engine/Public/EngineInterface.h"
 
-#include <windows.h> 
+#include <windows.h>
 
 //-----------------------------------------------------------------
 //-----------------------------------------------------------------

@@ -1,6 +1,6 @@
-#include "GameObjectManager.h"
-#include "GameObjectHandle.h"
-
+#include "Game/Public/GameObjectHandle.h"
+#include "Game/Public/GameObjectManager.h"
+ 
 GameObjectManager* GameObjectManager::sInstance = nullptr;
 
 GameObjectManager* GameObjectManager::GetInstance()
